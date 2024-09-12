@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>แสดงวันที่</title>
+    <title>แสดงวันที่ตามปฏิทิน</title>
     <style>
         .date-box {
             display: inline-block;
@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <p id="monthDisplay">สิงหาคม 2567</p>
+    <p id="monthDisplay"></p>
     <div id="dateContainer" class="container">
         <!-- Date boxes will be inserted here -->
     </div>

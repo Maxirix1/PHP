@@ -6,37 +6,44 @@ const monthsTH = [
 
 const container = document.getElementById('dateContainer');
 const monthDisplay = document.getElementById('monthDisplay');
-let currentDate = new Date();
+let currentDate = new Date();  // วันที่ปัจจุบัน
+let currentIndex = 0; // ตำแหน่งเริ่มต้นสำหรับ 4 วันแรก
 
 function updateMonthDisplay() {
     const month = monthsTH[currentDate.getMonth()];
-    const year = currentDate.getFullYear() + 543; // Thai Buddhist year
+    const year = currentDate.getFullYear() + 543; // ปีพุทธศักราช
     monthDisplay.textContent = `${month} ${year}`;
 }
 
+function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate(); // คำนวณจำนวนวันในเดือนที่เลือก
+}
+
 function updateDateBoxes() {
-    container.innerHTML = ''; // Clear existing content
+    container.innerHTML = ''; // ลบข้อมูลเดิม
+    const daysInMonth = getDaysInMonth(currentDate.getFullYear(), currentDate.getMonth());
+    const tempDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentIndex + 1);
 
-    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    let startDay = new Date(startOfMonth);
-    startDay.setDate(startOfMonth.getDate() - startOfMonth.getDay()); // Start from the beginning of the week
+    for (let i = 0; i < 4; i++) { // แสดง 4 วัน
+        if (tempDate.getDate() > daysInMonth) {
+            // หากเกินจำนวนวันในเดือน ก็ข้ามไปเดือนถัดไป
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            currentIndex = 0;
+            updateMonthDisplay();
+            updateDateBoxes();
+            return;
+        }
 
-    for (let i = 0; i < 4; i++) {
         const box = document.createElement('div');
         box.className = 'date-box';
-
-        const dayOfWeek = daysTH[startDay.getDay()];
-        const date = startDay.getDate();
-
-        // Ensure the date is within the current month
-        if (startDay.getMonth() === currentDate.getMonth()) {
-            box.textContent = `${dayOfWeek} ${date}`;
-        } else {
-            box.textContent = '';
-        }
+        
+        const dayOfWeek = daysTH[tempDate.getDay()];
+        const date = tempDate.getDate();
+        
+        box.textContent = `${dayOfWeek} ${date}`;
         container.appendChild(box);
-
-        startDay.setDate(startDay.getDate() + 1); // Move to next day
+        
+        tempDate.setDate(tempDate.getDate() + 1);
     }
 }
 
@@ -46,23 +53,24 @@ function updateDates() {
 }
 
 document.getElementById('prevDates').addEventListener('click', () => {
-    currentDate.setDate(currentDate.getDate() - 4);
-    if (currentDate.getDate() < 1) {
+    currentIndex -= 4;
+    if (currentIndex < 0) {
         currentDate.setMonth(currentDate.getMonth() - 1);
-        currentDate.setDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate());
+        const daysInPreviousMonth = getDaysInMonth(currentDate.getFullYear(), currentDate.getMonth());
+        currentIndex = daysInPreviousMonth - (daysInPreviousMonth % 4);
     }
     updateDates();
 });
 
 document.getElementById('nextDates').addEventListener('click', () => {
-    currentDate.setDate(currentDate.getDate() + 4);
-    const daysInCurrentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    if (currentDate.getDate() > daysInCurrentMonth) {
+    const daysInMonth = getDaysInMonth(currentDate.getFullYear(), currentDate.getMonth());
+    currentIndex += 4;
+    if (currentIndex >= daysInMonth) {
         currentDate.setMonth(currentDate.getMonth() + 1);
-        currentDate.setDate(1);
+        currentIndex = 0;
     }
     updateDates();
 });
 
-// Initial display update
+// เริ่มต้นแสดงข้อมูล
 updateDates();
