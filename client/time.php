@@ -23,6 +23,7 @@
     </style>
 </head>
 <body>
+    
     <p id="monthDisplay"></p>
     <div id="dateContainer" class="container">
         <!-- Date boxes will be inserted here -->

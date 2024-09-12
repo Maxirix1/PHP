@@ -1,4 +1,4 @@
-const daysTH = ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"];
+const daysTH = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
 const monthsTH = [
     "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
     "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
@@ -40,12 +40,15 @@ function updateDateBoxes() {
         const dayOfWeek = daysTH[tempDate.getDay()];
         const date = tempDate.getDate();
         
-        box.textContent = `${dayOfWeek} ${date}`;
+        box.innerHTML = `${dayOfWeek}<br/>${date}`;
+        box.innerHTML = `<div class="dateWeek">${dayOfWeek}<div/><br/><div class="dateNumber">${date}<div/>`;
+        
         container.appendChild(box);
         
         tempDate.setDate(tempDate.getDate() + 1);
     }
 }
+
 
 function updateDates() {
     updateMonthDisplay();

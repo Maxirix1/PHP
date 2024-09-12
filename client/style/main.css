@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* font-family: "Kanit", sans-serif; */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* font-family: "Poppins", sans-serif; */
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-family: "Kanit", sans-serif;
+}
+section {
+  padding: 20px;
+  background: rgb(42, 189, 255);
+  background: radial-gradient(
+    circle,
+    rgba(42, 189, 255, 1) 0%,
+    rgba(0, 75, 143, 1) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  height: 95.7vh;
+  background-color: #00000035;
+  backdrop-filter: blur(20px);
+  border: 1px solid #00000022;
+  border-radius: 20px;
+}
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.signup a,
+.login a {
+  text-shadow: 2px 2px 2px #0000002b;
+  font-size: 2rem;
+  font-weight: 600;
+  color: rgb(3, 63, 131);
+  box-shadow: 3px 4px 10px #0000004c;
+  background-color: #fff;
+  padding: 7px 25px;
+  border-radius: 10px;
+}
+
+.login a:hover,
+.signup a:hover {
+  box-shadow: inset 2px 3px 5px #00000082;
+}
+img {
+  width: 50%;
+  /* margin-bottom: 20vh; */
+}
