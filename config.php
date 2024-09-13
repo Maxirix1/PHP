@@ -9,7 +9,9 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // ทดสอบการดึงข้อมูล
-    $stmt = $conn->query("SELECT * FROM setting_reserve");
+    $stmt = $conn->query("SELECT [code]
+	, [name]
+FROM [smart_queue].[dbo].[department]");
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         print_r($row);
