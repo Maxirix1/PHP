@@ -196,6 +196,7 @@ select {
   color: #fff;
   font-size: 1.2rem;
   padding: 5px 35px;
+  border-radius: 14px;
 }
 
 .date-box {
@@ -257,4 +258,3 @@ select {
   height: auto;
   padding: 0;
 }
-

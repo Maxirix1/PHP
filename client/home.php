@@ -43,6 +43,8 @@
                 <option value="saab">Saab</option>
                 <option value="mercedes">Mercedes</option>
                 <option value="audi">Audi</option>
+                <option value="bmw">BMW</option>
+                <option value="honda">HONDA</option>
             </select>
         </div>
 
@@ -84,8 +86,8 @@
                 <div class="time">09:00</div>
                 <div class="time">10:00</div>
                 <div class="time">11:00</div>
+                <div class="time">12:00</div>
                 <div class="time">13:00</div>
-                <div class="time">14:00</div>
                 <div class="time">11:00</div>
                 <div class="time">13:00</div>
                 <div class="time">14:00</div>
@@ -109,8 +111,8 @@
                 <div class="time">14:00</div>
             </div>
 
-            <div class="submit">
-                <button>ยืนยัน</button>
+            <div class="submit" style="margin-top: 20px;">
+                <button class="rounded">ยืนยัน</button>
             </div>
         </div>
     </div>

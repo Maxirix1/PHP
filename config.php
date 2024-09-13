@@ -9,14 +9,13 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // ทดสอบการดึงข้อมูล
-    $stmt = $conn->query("SELECT [code]
-	, [name]
-FROM [smart_queue].[dbo].[department]");
+//     $stmt = $conn->query("SELECT name
+// FROM smart_queue.dbo.department");
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        print_r($row);
-    }
-    echo"SUCCESS";
+//     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//         print_r($row);
+//     }
+    echo"404 ERROR | Connect SUCCESS";
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
