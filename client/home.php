@@ -1,3 +1,28 @@
+<?php
+// เรียกใช้การเชื่อมต่อฐานข้อมูลผ่าน config.php
+include("../config.php");
+
+// คำสั่ง SQL สำหรับดึงข้อมูล
+$sql = "SELECT [name] FROM [smart_queue].[dbo].[department]";
+
+try {
+    // ใช้การเชื่อมต่อ PDO จาก config.php
+    $stmt = $conn->query($sql); // ใช้ query() ผ่านออบเจ็กต์ PDO ($conn)
+
+    // เริ่มต้นการแสดง select box
+
+    // วนลูปแสดงข้อมูลในรูปแบบ option
+
+
+    echo '</select>';
+} catch (PDOException $e) {
+    // แสดงข้อความ error หากมีปัญหา
+    echo "Error: " . $e->getMessage();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="./style/style.css?v=1.0">
+    <link rel="stylesheet" href="./style/responsive.css">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
 </head>
 
@@ -37,19 +63,21 @@
         <div class="textSelect">
             <p>ระบุแผนก</p>
         </div>
-        <div class="dropdown">
-            <select class="department" id="department">
-                <option value="volvo">อายุรกรรม</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-                <option value="bmw">BMW</option>
-                <option value="honda">HONDA</option>
-            </select>
-        </div>
+        <?php
+        echo '<div class="dropdown">';
+        echo '<select class="department" id="department">';
+
+        // วนลูปแสดงข้อมูลในรูปแบบ option
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo '<option>' . htmlspecialchars($row['name']) . '</option>';
+        }
+
+        echo '</select>';
+        echo '</div>';
+        ?>
 
         <div class="dataReserve">
-            <p>ระบุวันนัดหมาย</p>
+            <p class="text">ระบุวันนัดหมาย</p>
             <div class="dataSelect">
 
                 <button id="prevDates">
@@ -79,7 +107,7 @@
             </div>
 
 
-            <h2>เลือกเวลา</h2>
+            <h2 class="textSelectTime">เลือกเวลา</h2>
 
             <div class="selectTime">
                 <div class="time">08:00</div>

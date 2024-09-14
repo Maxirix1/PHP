@@ -48,7 +48,7 @@ header .dataMain h2 {
 }
 .containerMain {
   background-color: #ffffff;
-  border-radius: 50px;
+  border-radius: 25px;
   margin-top: -25px;
 }
 
@@ -71,7 +71,11 @@ header .dataMain h2 {
   margin-top: -6vh;
 }
 .contenthead .logo img {
-  width: 56vw;
+  width: 280px;
+  /* padding: 20px; */
+}
+.textSelectTime {
+  color: #0a5491;
 }
 .textHead {
   font-size: 2rem;
@@ -247,7 +251,7 @@ select {
 .dataMonthHead {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
 }
 .dataMonthHead p {

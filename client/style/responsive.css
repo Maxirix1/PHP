@@ -1,0 +1,89 @@
+@media screen and (min-width: 700px) {
+  .textHead {
+    font-size: 4rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .containerMain {
+    padding: 0 200px;
+  }
+  .textSelect {
+    left: 320px;
+    /* margin-top: 10px; */
+    padding: 15px 10px;
+  }
+  .dropdown {
+    /* width: 70%; */
+    padding: 30px 170px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dataSelect {
+    padding: 0 200px;
+  }
+  .selectTime {
+    height: 350px;
+    padding: 13px 25px;
+  }
+  header {
+    justify-content: center;
+    gap: 30vw;
+  }
+}
+@media screen and (min-width: 1600px) {
+  .dropdown {
+    padding: 30px 250px;
+  }
+  .textSelect {
+    left: 500px;
+  }
+  .selectTime {
+    height: 350px;
+    padding: 20px 200px;
+  }
+}
+@media screen and (min-width: 2000px) {
+  .containerMain {
+    padding: 0 300px;
+  }
+  .dropdown {
+    padding: 30px 360px;
+  }
+  .dataSelect {
+    padding: 0 360px;
+  }
+  .textSelect {
+    left: 600px;
+  }
+  .selectTime {
+    height: 350px;
+    padding: 20px 200px;
+  }
+}
+@media screen and (min-width: 2500px) {
+  .containerMain {
+    padding: 0 20vw;
+  }
+  .dropdown {
+    padding: 30px 360px;
+  }
+  .dataSelect {
+    padding: 0 360px;
+  }
+  .textSelect {
+    left: 600px;
+  }
+  .selectTime {
+    height: 350px;
+    padding: 20px 15vw;
+  }
+  .dataReserve > .text {
+    padding-left: 10vw;
+  }
+  .textSelectTime {
+    padding-left: 10vw;
+    color: #0a5491;
+  }
+}
