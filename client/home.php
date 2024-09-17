@@ -1,22 +1,20 @@
 <?php
-// เรียกใช้การเชื่อมต่อฐานข้อมูลผ่าน config.php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ./login.php');
+    exit();
+}
+
 include("../config.php");
 
-// คำสั่ง SQL สำหรับดึงข้อมูล
 $sql = "SELECT [name] FROM [smart_queue].[dbo].[department]";
 
 try {
-    // ใช้การเชื่อมต่อ PDO จาก config.php
-    $stmt = $conn->query($sql); // ใช้ query() ผ่านออบเจ็กต์ PDO ($conn)
 
-    // เริ่มต้นการแสดง select box
+    $stmt = $conn->query($sql);
 
-    // วนลูปแสดงข้อมูลในรูปแบบ option
-
-
-    echo '</select>';
 } catch (PDOException $e) {
-    // แสดงข้อความ error หากมีปัญหา
     echo "Error: " . $e->getMessage();
 }
 ?>
@@ -32,24 +30,33 @@ try {
     <title>Home</title>
     <link rel="stylesheet" href="./style/style.css?v=1.0">
     <link rel="stylesheet" href="./style/responsive.css">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
 </head>
 
 <body>
     <header>
         <div class="dataMain">
-            <h2>HN xxxxxx</h2>
-            <h2>คุณ xxx xxx</h2>
+            <h2>HN xxx xxx</h2>
+            <h2>คุณ <?= htmlspecialchars($_SESSION['username']) ?></h2>
+            <a href="../logout.php" style="
+            background-color: #fff;
+            font-weight: 600;
+            color: #0a5491;
+            padding: 1px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            z-index: 999;
+            ">ออกจากระบบ</a>
         </div>
         <div class="language">
+
             <select class="dropdownLang">
                 <option value="th">Thailand</option>
                 <option value="en">English</option>
             </select>
-            <div class="textLang">
-                <p>Thailand</p>
-            </div>
         </div>
+
     </header>
 
     <div class="containerMain">
@@ -66,7 +73,7 @@ try {
         <?php
         echo '<div class="dropdown">';
         echo '<select class="department" id="department">';
-
+        echo '<option>เลือกแผนก</option>';
         // วนลูปแสดงข้อมูลในรูปแบบ option
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo '<option>' . htmlspecialchars($row['name']) . '</option>';

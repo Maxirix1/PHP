@@ -63,17 +63,27 @@
   }
 }
 @media screen and (min-width: 2500px) {
+  header {
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0vh 10vw;
+    height: 20vh;
+    padding-bottom: 7vh;
+  }
   .containerMain {
-    padding: 0 20vw;
+    padding: 0 25vw;
+  }
+  .contentHead {
+    padding: 0 10vw;
   }
   .dropdown {
     padding: 30px 360px;
   }
   .dataSelect {
-    padding: 0 360px;
+    padding: 0 400px;
   }
   .textSelect {
-    left: 600px;
+    left: 40vw;
   }
   .selectTime {
     height: 350px;
@@ -85,5 +95,31 @@
   .textSelectTime {
     padding-left: 10vw;
     color: #0a5491;
+  }
+}
+@media screen and (max-width: 344px) {
+  header {
+    padding: 4vh 1vw;
+    padding-bottom: 10vh;
+  }
+  .contentHead .logo img {
+    width: 200px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .date-box {
+    width: 70px;
+    margin: 5px;
+  }
+}
+
+@media screen and (max-height: 911px) {
+  header {
+    height: 16vh;
+  }
+}
+@media screen and (max-height: 735px) {
+  header {
+    height: 18vh;
   }
 }
