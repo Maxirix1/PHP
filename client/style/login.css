@@ -33,10 +33,12 @@ section {
   backdrop-filter: blur(20px);
   border: 1px solid #00000022;
   border-radius: 20px;
+  width: 100%;
 }
 .content {
   display: flex;
   align-items: center;
+  width: 100%;
   justify-content: center;
   flex-direction: column;
   gap: 30px;
@@ -44,7 +46,10 @@ section {
 form {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    padding: 0 17vw;
 }
+
 img {
   width: 50%;
   /* margin-bottom: 20vh; */

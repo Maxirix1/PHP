@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start()
 ?>
 
@@ -52,4 +52,4 @@ session_start()
     </section>
 </body>
 
-</html>
+</html> -->

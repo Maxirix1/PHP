@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['hn'])) {
     header('Location: ./login.php');
+
     exit();
 }
 
@@ -37,8 +38,8 @@ try {
 <body>
     <header>
         <div class="dataMain">
-            <h2>HN xxx xxx</h2>
-            <h2>คุณ <?= htmlspecialchars($_SESSION['username']) ?></h2>
+            <h2 style="font-size: 2rem; font-weight: 600;">HN <?= htmlspecialchars($_SESSION['hn']) ?></h2>
+            <!-- <h2>คุณ </h2> -->
             <a href="../logout.php" style="
             background-color: #fff;
             font-weight: 600;
