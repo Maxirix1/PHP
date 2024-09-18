@@ -12,15 +12,15 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
     $defaultPassword = $hn . '00';
 
-    if ($user && $password === $dafaultPassword) {
+    if ($user && $password === $defaultPassword) {
         $_SESSION['hn'] = $user['hn'];
         header('Location: ./client/home.php');
         exit();
     } else {
         $_SESSION['error'] = 'HN หรือ รหัสผ่านไม่ถูกต้อง';
-        header('Location: ./client/home.php');
+        header('Location: ./client/login.php');
         exit();
     }
 }
-echo $user['hn'];
 ?>
+

@@ -19,6 +19,24 @@ try {
     echo "Error: " . $e->getMessage();
 }
 ?>
+<?php
+include '../time.php';
+
+if (isset($_SESSION['timeSlots'])) {
+    $timeSlots = $_SESSION['timeSlots'];
+
+    echo '<h1>Time</h1>';
+    foreach ($timeSlots as $slots) {
+        echo '<ul>';
+        foreach ($slot as $slot) {
+            echo '<li>' . htmlspecialchars($slot) . '</li>';
+        }
+        echo '</ul>';
+    }
+    unset($_SESSION['timeSlots']);
+} else {
+}
+?>
 
 
 
