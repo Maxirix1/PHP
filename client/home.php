@@ -3,41 +3,21 @@ session_start();
 
 if (!isset($_SESSION['hn'])) {
     header('Location: ./login.php');
-
     exit();
 }
 
-include("../config.php");
+require_once '../config.php';
 
 $sql = "SELECT [name] FROM [smart_queue].[dbo].[department]";
 
 try {
-
     $stmt = $conn->query($sql);
-
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
+
+
 ?>
-<?php
-include '../time.php';
-
-if (isset($_SESSION['timeSlots'])) {
-    $timeSlots = $_SESSION['timeSlots'];
-
-    echo '<h1>Time</h1>';
-    foreach ($timeSlots as $slots) {
-        echo '<ul>';
-        foreach ($slot as $slot) {
-            echo '<li>' . htmlspecialchars($slot) . '</li>';
-        }
-        echo '</ul>';
-    }
-    unset($_SESSION['timeSlots']);
-} else {
-}
-?>
-
 
 
 <!DOCTYPE html>
@@ -135,6 +115,24 @@ if (isset($_SESSION['timeSlots'])) {
 
             <h2 class="textSelectTime">เลือกเวลา</h2>
 
+            <?php
+            include '../time.php';
+
+            if (isset($_SESSION['timeSlots']) && !empty($_SESSION['timeSlots'])) {
+                $timeSlots = $_SESSION['timeSlots'];
+            
+                foreach ($timeSlots as $slots) {
+                    echo '<ul>';
+                    foreach ($slots as $slot) {
+                        echo '</br><li>' . htmlspecialchars($slot) . '</li>';
+                    }
+                    echo '</br></ul>';
+                }
+                unset($_SESSION['timeSlots']);
+            } else {
+                echo 'ERROR: No time slots available.';
+            }
+            ?>
             <div class="selectTime">
                 <div class="time">08:00</div>
                 <div class="time">09:00</div>

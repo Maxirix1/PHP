@@ -1,17 +1,17 @@
 <?php
-session_start();
-require_once './config.php';
+require_once '../config.php'; // เชื่อมต่อฐานข้อมูล
 
-
-$sql = "SELECT range_time, qty_taking FROM setting_reserve";
-$stmt = $conn->query($sql);
-
-$settings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+try {
+    $sql = "SELECT range_time, qty_taking FROM setting_reserve";
+    $stmt = $conn->query($sql);
+    $settings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
 
 $timeSlots = [];
 
 foreach ($settings as $setting) {
-
     $rangeTime = $setting['range_time'];
     list($startTime, $endTime) = explode('-', $rangeTime);
 
@@ -22,18 +22,18 @@ foreach ($settings as $setting) {
 
     $interval = round(($endTimestamp - $startTimestamp) / $qtyTaking);
 
+    $slot = [];
     for ($i = 0; $i < $qtyTaking; $i++) {
         $newTime = $startTimestamp + ($i * $interval);
         $slot[] = date('H:i', $newTime);
     }
 
-    $timeSlots[] = $slots;
+    $timeSlots[] = $slot;
 }
 
-$_SESSION['timeSlots'] = $timeSlots;
-
-header('Location: ./client/home.php');
-exit();
-
-
+if (!empty($timeSlots)) {
+    $_SESSION['timeSlots'] = $timeSlots;
+} else {
+    echo 'No time slots were generated.';
+}
 ?>
