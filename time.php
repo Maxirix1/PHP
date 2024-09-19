@@ -11,6 +11,8 @@ try {
 
 $timeSlots = [];
 
+// $mergedTimeSlots = [];
+
 foreach ($settings as $setting) {
     $rangeTime = $setting['range_time'];
     list($startTime, $endTime) = explode('-', $rangeTime);
@@ -36,4 +38,6 @@ if (!empty($timeSlots)) {
 } else {
     echo 'No time slots were generated.';
 }
+// header('Location: ./home.php');
+// exit();
 ?>

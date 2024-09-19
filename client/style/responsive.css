@@ -123,3 +123,27 @@
     height: 18vh;
   }
 }
+@media screen and (min-width: 736px) {
+  .contentButton button {
+    width: 200px;
+    font-size: 17px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .contentButton button {
+    width: 100px;
+  }
+}
+@media screen and (max-width: 365px) {
+  header {
+    padding: 0;
+    padding-bottom: 6vh;
+  }
+  .logo {
+    width: 2px;
+  }
+  .contentButton button {
+    width: 90px;
+  }
+}

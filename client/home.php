@@ -15,8 +15,6 @@ try {
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
-
-
 ?>
 
 
@@ -71,7 +69,7 @@ try {
         </div>
         <?php
         echo '<div class="dropdown">';
-        echo '<select class="department" id="department">';
+        echo '<select class="department" id="department" style="background-color: #fff;">';
         echo '<option>เลือกแผนก</option>';
         // วนลูปแสดงข้อมูลในรูปแบบ option
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -112,58 +110,54 @@ try {
 
             </div>
 
-
-            <h2 class="textSelectTime">เลือกเวลา</h2>
-
-            <?php
-            include '../time.php';
-
-            if (isset($_SESSION['timeSlots']) && !empty($_SESSION['timeSlots'])) {
-                $timeSlots = $_SESSION['timeSlots'];
-            
-                foreach ($timeSlots as $slots) {
-                    echo '<ul>';
-                    foreach ($slots as $slot) {
-                        echo '</br><li>' . htmlspecialchars($slot) . '</li>';
-                    }
-                    echo '</br></ul>';
-                }
-                unset($_SESSION['timeSlots']);
-            } else {
-                echo 'ERROR: No time slots available.';
-            }
-            ?>
-            <div class="selectTime">
-                <div class="time">08:00</div>
-                <div class="time">09:00</div>
-                <div class="time">10:00</div>
-                <div class="time">11:00</div>
-                <div class="time">12:00</div>
-                <div class="time">13:00</div>
-                <div class="time">11:00</div>
-                <div class="time">13:00</div>
-                <div class="time">14:00</div>
-                <div class="time">11:00</div>
-                <div class="time">13:00</div>
-                <div class="time">14:00</div>
-                <div class="time">11:00</div>
-                <div class="time">13:00</div>
-                <div class="time">14:00</div>
-                <div class="time">14:00</div>
-                <div class="time">11:00</div>
-                <div class="time">13:00</div>
-                <div class="time">14:00</div>
-                <div class="time">14:00</div>
-                <div class="time">11:00</div>
-                <div class="time">13:00</div>
-                <div class="time">14:00</div>
-                <div class="time">14:00</div>
-                <div class="time">11:00</div>
-                <div class="time">13:00</div>
-                <div class="time">14:00</div>
+            <div class="headText">
+                <h2 class="textSelectTime" style="padding:8px 25px;">เลือกเวลา</h2>
+                <a href="history">ประวัจิการจองทั้งหมดของคุณ</a>
             </div>
 
-            <div class="submit" style="margin-top: 20px;">
+            <div class="selectTime" style="padding:8px 25px;">
+
+
+                <?php
+                include '../time.php';
+
+                if (isset($_SESSION['timeSlots']) && !empty($_SESSION['timeSlots'])) {
+                    $timeSlots = $_SESSION['timeSlots'];
+
+                    $mergedTimeSlots = [];
+                    foreach ($timeSlots as $slots) {
+                        $mergedTimeSlots = array_merge($mergedTimeSlots, $slots);
+                    }
+
+                    // รวมกันแล้ว
+                    echo '<div class="contentButton" style="
+                    display: flex; 
+                    flex-wrap: wrap; 
+                    gap: 10px; 
+                    align-item: start; 
+                    justify-content: center;
+                    margin-top: 20px;
+                    ">';
+                    foreach ($mergedTimeSlots as $slot) {
+                        echo '<button class="buttonDate" href="#">
+                        ' . htmlspecialchars($slot) . '</button>';
+                    }
+                    echo '</div>';
+                    unset($_SESSION['timeSlots']);
+                } else {
+                    echo 'ERROR: No time slots available.';
+                }
+                ?>
+                <!-- <div class="time">08:00</div>
+                <div class="time">09:00</div>
+                <div class="time">10:00</div>   
+                <div class="time">14:00</div>
+                <div class="time">11:00</div>
+                <div class="time">13:00</div>
+                <div class="time">14:00</div> -->
+            </div>
+
+            <div class="submit" style="margin-top: 20px; margin-bottom: 30px;">
                 <button class="rounded">ยืนยัน</button>
             </div>
         </div>

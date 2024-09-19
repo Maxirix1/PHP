@@ -176,6 +176,7 @@ select {
   gap: 10px; /* เพิ่มระยะห่างระหว่างคอลัมน์ */
   padding: 13px 10px;
   overflow-y: scroll;
+  scrollbar-width: 40px;
   height: 300px;
 }
 
@@ -217,6 +218,12 @@ select {
   color: #fff;
   border-radius: 14px;
 }
+.date-box > div {
+  cursor: pointer;
+}
+.date-box:hover {
+  background-color: #024783;
+}
 .container {
   display: flex;
   justify-content: center;
@@ -247,7 +254,17 @@ select {
 #monthDisplay {
   width: 60%;
 }
-
+.headText {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.headText a {
+  color: #0a5491;
+  padding: 5px 10px;
+  border: 1px solid #0a5491;
+  border-radius: 10px;
+}
 .dataMonthHead {
   display: flex;
   align-items: center;
@@ -261,4 +278,22 @@ select {
   width: 45px;
   height: auto;
   padding: 0;
+}
+
+.contentButton button {
+  background-color: #c0c0c0; 
+  width: 130px;
+  border: none;
+  color: #ffffff;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius:5px;
+  padding: 10px 15px;
+  text-align: center;
+}
+.contentButton button:hover {
+  background-color: #3bbd3d;
+  color: #fff;
 }
