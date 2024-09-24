@@ -32,7 +32,7 @@ $(document).ready(function() {
         $container.empty();
         const daysInMonth = getDaysInMonth(currentDate.getFullYear(), currentDate.getMonth());
         let tempDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentIndex + 1);
-
+    
         for (let i = 0; i < 4; i++) {
             if (tempDate.getDate() > daysInMonth) {
                 currentDate.setMonth(currentDate.getMonth() + 1);
@@ -41,38 +41,39 @@ $(document).ready(function() {
                 updateDateBoxes();
                 return;
             }
-
+    
             const dateForButton = new Date(tempDate);
             const $box = $('<button class="date-box"></button>');
-
+    
             const dayOfWeek = daysTH[dateForButton.getDay()];
             const date = dateForButton.getDate();
-
+    
             $box.html(`<div class="dateWeek">${dayOfWeek}</div><br/><div class="dateNumber">${date}</div>`);
-
-            $box.on('click', () => {
+    
+            $box.on('click', () => { 
                 const formattedDate = formatDateToDDMMYYYY(dateForButton);
-                sendDateToServer(formattedDate);
-            });
 
+                $.ajax({
+                    url: './home.php', // ไฟล์ PHP ที่จะรับค่า
+                    method: 'POST',
+                    data: { selectedDate: formattedDate }, // ส่งวันที่ที่เลือกไปยัง PHP
+                    success: function(response) {
+                        console.log('Success:', response);
+                        // อัปเดตเนื้อหาใน HTML ด้วย response ที่ได้รับมา
+                        $('.selectTime').html(response); // สมมติว่าไอดีของ container สำหรับเวลาเป็น time-list
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+            
+    
             $container.append($box);
             tempDate.setDate(tempDate.getDate() + 1);
         }
     }
 
-    function sendDateToServer(formattedDate) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'home.php', true); // เปลี่ยนเป็นชื่อไฟล์ PHP ที่คุณใช้
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                displayReservedTimes(response.reservedTimes); // ฟังก์ชันสำหรับแสดงเวลาที่จอง
-            }
-        };
-        xhr.send(`selectedDate=${formattedDate}`); // ส่ง selectedDate ไปใน POST request
-    }
-    
     
 
     function updateDates() {
