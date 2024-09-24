@@ -108,10 +108,21 @@ try {
         <div class="dataReserve">
             <p class="text">ระบุวันนัดหมาย</p>
             <div class="dataSelect">
-                <button id="prevDates">Previous</button>
-                <div id="dateContainer" class="container"></div>
-                <button id="nextDates">Next</button>
+                <button id="prevDates">
+                    <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 12h4v24h-4zm7 12l17 12V12z" />
+                        <path d="M0 0h48v48H0z" fill="none" />
+                    </svg>
+                </button>
+                <h1 id="monthDisplay" class="container"></h1>
+                <button id="nextDates"><svg height="48" viewBox="0 0 48 48" width="48"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 36l17-12-17-12v24zm20-24v24h4V12h-4z" />
+                        <path d="M0 0h48v48H0z" fill="none" />
+                    </svg></button>
             </div>
+            <div id="dateContainer" class="container"></div>
+
 
             <div class="headText">
                 <h2 class="textSelectTime">เลือกเวลา</h2>

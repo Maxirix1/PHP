@@ -252,7 +252,7 @@ select {
   fill: #4f4f4f;
 }
 #monthDisplay {
-  width: 60%;
+  width: 100%;
 }
 .headText {
   display: flex;
