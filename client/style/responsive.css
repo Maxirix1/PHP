@@ -111,6 +111,9 @@
     width: 70px;
     margin: 5px;
   }
+  .logo img {
+    width: 20px;
+  }
 }
 
 @media screen and (max-height: 911px) {
@@ -132,7 +135,11 @@
 
 @media screen and (max-width: 460px) {
   .contentButton button {
-    width: 100px;
+    width: 130px;
+    font-size: 1.2rem;
+  }
+  .selectTime {
+    padding: 0;
   }
 }
 @media screen and (max-width: 365px) {
@@ -140,10 +147,10 @@
     padding: 0;
     padding-bottom: 6vh;
   }
-  .logo {
-    width: 2px;
-  }
   .contentButton button {
     width: 90px;
+  }
+  .dataMain h2 {
+    font-size: 2px;
   }
 }
