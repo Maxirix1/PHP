@@ -128,4 +128,3 @@ $(document).ready(function() {
         document.body.appendChild(form);
         form.submit();
     });
-

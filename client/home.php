@@ -8,8 +8,19 @@ if (!isset($_SESSION['hn'])) {
 
 require_once '../config.php';
 
+// ตรวจสอบว่ามีการส่งข้อมูลผ่าน POST มาหรือไม่
+// ตรวจสอบว่ามีการส่งข้อมูลผ่าน POST มาหรือไม่
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['timeSlot'])) {
+    // รับค่าเวลาที่ส่งมาจาก AJAX
+    $selectedTime = htmlspecialchars($_POST['timeSlot']);
 
+    // เก็บเวลาที่เลือกไว้ในเซสชัน
+    $_SESSION['selected_time'] = $selectedTime;
 
+    // แสดงเวลาที่บันทึกลงเซสชัน (แค่ตรวจสอบว่าบันทึกสำเร็จ)
+    echo "Time saved: " . $_SESSION['selected_time'];
+    exit(); // หยุดการทำงานหลังจากแสดงค่า
+}
 
 // เช็คว่ามีการร้องขอจาก AJAX หรือไม่
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo $_SESSION['hn'];
     echo '<br>';
     echo $selectedDate;
-    echo $selectedDepartment;
 
     try {
         $stmt = $conn->prepare($sql);
@@ -31,24 +41,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $reservedTimes = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-        // แสดงปุ่มเวลา
+        // ปุ่ม
         if (isset($_SESSION['timeSlots']) && !empty($_SESSION['timeSlots'])) {
             $timeSlots = $_SESSION['timeSlots'];
+
             $mergedTimeSlots = [];
             foreach ($timeSlots as $slots) {
                 $mergedTimeSlots = array_merge($mergedTimeSlots, $slots);
             }
-            
 
             $output = '<div class="contentButton" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px;">';
             foreach ($mergedTimeSlots as $slot) {
                 $buttonColor = in_array($slot, $reservedTimes) ? '#0e6dc7' : '#ababab';
-                $output .= '<button class="buttonDate" style="background-color: ' . $buttonColor . ';">' . htmlspecialchars($slot) . '</button>';
-            }
+                $output .= '<button class="buttonDate" style="background-color: ' . $buttonColor . ';" onclick="sendTime(\'' . $slot . '\')">' . htmlspecialchars($slot) . '</button>';
+            }            
             $output .= '</div>';
             echo $output;
             unset($_SESSION['timeSlots']);
-
         } else {
             echo 'ERROR: No time slots available.';
         }
@@ -56,14 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (PDOException $e) {
         echo json_encode(['error' => $e->getMessage()]);
         exit();
-    };
-    
-    
+    }
 } else {
     $selectedDate = date('Ymd');
 }
-
-
 
 // ดึงแผนกทั้งหมด
 $sql = "SELECT [name],[code] FROM [smart_queue].[dbo].[department]";
@@ -74,6 +79,25 @@ try {
     exit();
 }
 ?>
+
+<script>
+function sendTime(selectedTime) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "", true); // ส่งไปยังไฟล์ปัจจุบัน
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log("Response from PHP: " + xhr.responseText); // แสดงค่าที่ echo มาจาก PHP
+        }
+    };
+
+    xhr.send("timeSlot=" + encodeURIComponent(selectedTime));
+}
+
+</script>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -133,6 +157,8 @@ try {
         </div>
 
         <div class="dataReserve">
+        <!-- <div id="selectedTime" style="margin-top: 20px; font-size: 18px; color: #333;"></div> -->
+
             <p class="text">ระบุวันนัดหมาย</p>
             <div class="dataSelect">
                 <button id="prevDates">
@@ -163,6 +189,7 @@ try {
             <div class="containerDateSelect">
                 <div class="selectTime">
                 </div>
+
             </div>
 
         </div>
