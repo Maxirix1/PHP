@@ -8,36 +8,25 @@ if (!isset($_SESSION['hn'])) {
 
 require_once '../config.php';
 
-// ตรวจสอบว่ามีการส่งข้อมูลผ่าน POST มาหรือไม่
-// ตรวจสอบว่ามีการส่งข้อมูลผ่าน POST มาหรือไม่
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['timeSlot'])) {
-    // รับค่าเวลาที่ส่งมาจาก AJAX
-    $selectedTime = htmlspecialchars($_POST['timeSlot']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['selectedDate'] = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : null;
+    $_SESSION['selectedTimeSlot'] = isset($_POST['timeSlot']) ? htmlspecialchars($_POST['timeSlot']) : null;
 
-    // เก็บเวลาที่เลือกไว้ในเซสชัน
-    $_SESSION['selected_time'] = $selectedTime;
-
-    // แสดงเวลาที่บันทึกลงเซสชัน (แค่ตรวจสอบว่าบันทึกสำเร็จ)
-    echo "Time saved: " . $_SESSION['selected_time'];
-    exit(); // หยุดการทำงานหลังจากแสดงค่า
+    
+    echo json_encode($_SESSION['selectedDate']);
+    echo $_SESSION['hn'];
 }
 
-// เช็คว่ามีการร้องขอจาก AJAX หรือไม่
+// ส่วนนี้แยกการแสดงผลปุ่มออกจากการส่ง session กลับ
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include '../time.php';
 
-    $selectedDate = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : date('Ymd'); 
-    $selectedDepartment = isset($_POST['selectedDepartment']) ? htmlspecialchars($_POST['selectedDepartment']) : null; // รับค่าที่เลือกจากแผนก
+    include '../time.php';
 
     $sql = "SELECT reserve_time FROM reserve_time WHERE date = :selectedDate";
 
-    echo $_SESSION['hn'];
-    echo '<br>';
-    echo $selectedDate;
-
     try {
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':selectedDate', $selectedDate);
+        $stmt->bindParam(':selectedDate', $_SESSION['selectedDate']);
         $stmt->execute();
         $reservedTimes = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
@@ -50,18 +39,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mergedTimeSlots = array_merge($mergedTimeSlots, $slots);
             }
 
+            // การแสดงผลปุ่มจะเกิดขึ้นที่นี่ แต่จะไม่ถูก response พร้อมข้อมูล session
             $output = '<div class="contentButton" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px;">';
             foreach ($mergedTimeSlots as $slot) {
                 $buttonColor = in_array($slot, $reservedTimes) ? '#0e6dc7' : '#ababab';
-                $output .= '<button class="buttonDate" style="background-color: ' . $buttonColor . ';" onclick="sendTime(\'' . $slot . '\')">' . htmlspecialchars($slot) . '</button>';
-            }            
+                $output .= '<button class="buttonDate" style="background-color: ' . $buttonColor . '; cursor: pointer;" onclick="sendTime(\'' . $slot . '\')">' . htmlspecialchars($slot) . '</button>';
+            }
             $output .= '</div>';
             echo $output;
+
             unset($_SESSION['timeSlots']);
         } else {
             echo 'ERROR: No time slots available.';
         }
-        exit(); // หยุดการทำงานหลังจากส่งข้อมูล
+
+        exit();
+
     } catch (PDOException $e) {
         echo json_encode(['error' => $e->getMessage()]);
         exit();
@@ -78,24 +71,8 @@ try {
     echo "Error: " . $e->getMessage();
     exit();
 }
+
 ?>
-
-<script>
-function sendTime(selectedTime) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "", true); // ส่งไปยังไฟล์ปัจจุบัน
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log("Response from PHP: " + xhr.responseText); // แสดงค่าที่ echo มาจาก PHP
-        }
-    };
-
-    xhr.send("timeSlot=" + encodeURIComponent(selectedTime));
-}
-
-</script>
 
 
 
@@ -157,7 +134,7 @@ function sendTime(selectedTime) {
         </div>
 
         <div class="dataReserve">
-        <!-- <div id="selectedTime" style="margin-top: 20px; font-size: 18px; color: #333;"></div> -->
+            <!-- <div id="selectedTime" style="margin-top: 20px; font-size: 18px; color: #333;"></div> -->
 
             <p class="text">ระบุวันนัดหมาย</p>
             <div class="dataSelect">
@@ -206,7 +183,11 @@ function sendTime(selectedTime) {
                 <option value="<?= htmlspecialchars($row['name']) ?>"><?= htmlspecialchars($row['name']) ?></option>
             <?php } ?>
         </select>
-        <button class="rounded" id="confirmButton">ยืนยัน</button>
+
+        <form id="confirmForm" method="POST" action="../process.php"> <!-- เปลี่ยน action ตามที่คุณต้องการ -->
+            <button type="submit">ยืนยัน</button>
+        </form>
+
     </div>
 
 
