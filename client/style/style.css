@@ -321,7 +321,7 @@ select {
   padding: 10px 15px;
   text-align: center;
 }
-.contentButton button:hover {
+.buttonDate:hover {
   background-color: #3bbd3d;
   color: #fff;
 }

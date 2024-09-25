@@ -104,3 +104,28 @@ $(document).ready(function() {
     // เริ่มแสดงข้อมูล
     updateDates();
 });
+
+    document.getElementById('department').addEventListener('change', function() {
+        const selectedValue = this.value; // ค่าแผนกที่เลือก
+        console.log(selectedValue); // แสดงค่าที่เลือกในคอนโซล
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'home.php';
+
+        const inputDepartment = document.createElement('input');
+        inputDepartment.type = 'hidden';
+        inputDepartment.name = 'selectedDepartment'; // ชื่อที่คุณต้องการให้ใน PHP
+        inputDepartment.value = selectedValue;
+
+        const inputDate = document.createElement('input');
+        inputDate.type = 'hidden';
+        inputDate.name = 'selectedDate'; // ค่าอื่น ๆ ที่คุณต้องการส่ง
+        inputDate.value = ''; // ถ้าต้องการค่าเฉพาะ สามารถตั้งค่าได้
+
+        form.appendChild(inputDepartment);
+        form.appendChild(inputDate);
+        document.body.appendChild(form);
+        form.submit();
+    });
+

@@ -8,15 +8,23 @@ if (!isset($_SESSION['hn'])) {
 
 require_once '../config.php';
 
+
+
+
 // เช็คว่ามีการร้องขอจาก AJAX หรือไม่
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include '../time.php';
 
-    // ตรวจสอบว่ามีการส่ง selectedDate มาหรือไม่
-    $selectedDate = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : date('Ymd'); // ใช้วันที่ปัจจุบันเป็นค่าเริ่มต้น
+    $selectedDate = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : date('Ymd'); 
+    $selectedDepartment = isset($_POST['selectedDepartment']) ? htmlspecialchars($_POST['selectedDepartment']) : null; // รับค่าที่เลือกจากแผนก
 
-    // ดึงข้อมูลเวลาที่จองไว้
     $sql = "SELECT reserve_time FROM reserve_time WHERE date = :selectedDate";
+
+    echo $_SESSION['hn'];
+    echo '<br>';
+    echo $selectedDate;
+    echo $selectedDepartment;
+
     try {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':selectedDate', $selectedDate);
@@ -30,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             foreach ($timeSlots as $slots) {
                 $mergedTimeSlots = array_merge($mergedTimeSlots, $slots);
             }
+            
 
             $output = '<div class="contentButton" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px;">';
             foreach ($mergedTimeSlots as $slot) {
@@ -39,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $output .= '</div>';
             echo $output;
             unset($_SESSION['timeSlots']);
+
         } else {
             echo 'ERROR: No time slots available.';
         }
@@ -46,15 +56,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (PDOException $e) {
         echo json_encode(['error' => $e->getMessage()]);
         exit();
-    }
+    };
+    
+    
 } else {
-    // ค่าดีฟอลต์เมื่อไม่ได้ส่ง POST request
-    $selectedDate = date('Ymd'); // หรือค่าที่คุณต้องการ
+    $selectedDate = date('Ymd');
 }
 
 
+
 // ดึงแผนกทั้งหมด
-$sql = "SELECT [name] FROM [smart_queue].[dbo].[department]";
+$sql = "SELECT [name],[code] FROM [smart_queue].[dbo].[department]";
 try {
     $stmt = $conn->query($sql);
 } catch (PDOException $e) {
@@ -76,7 +88,7 @@ try {
 </head>
 
 <body>
-<header>
+    <header>
         <div class="dataMain">
             <h2 style="font-size: 2rem; font-weight: 600;">HN <?= htmlspecialchars($_SESSION['hn']) ?></h2>
             <!-- <h2>คุณ </h2> -->
@@ -101,7 +113,7 @@ try {
     </header>
 
     <div class="containerMain">
-    <div class="contenthead">
+        <div class="contenthead">
             <div class="logo">
                 <img src="./assets/logoSmall.png" alt="Logo">
             </div>
@@ -112,7 +124,7 @@ try {
             <p>ระบุแผนก</p>
         </div>
         <div class="dropdown">
-            <select class="department" id="department" style="background-color: #fff;">
+            <select class="department" id="department" style="background-color: #fff; " name="selectedDepartment">
                 <option value="" disabled selected>เลือกแผนก</option>
                 <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
                     <option><?= htmlspecialchars($row['name']) ?></option>
@@ -134,7 +146,7 @@ try {
                     <img src="./assets/calendar.png" alt="Calendar Icon">
                     <p id="monthDisplay"></p>
                 </div>
-                
+
                 <button id="nextDates"><svg height="48" viewBox="0 0 48 48" width="48"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 36l17-12-17-12v24zm20-24v24h4V12h-4z" />
@@ -153,11 +165,23 @@ try {
                 </div>
             </div>
 
-            <div class="submit" style="margin: 0 20px;">
-                <button class="rounded">ยืนยัน</button>
-            </div>
         </div>
     </div>
+    <div class="submit" style="margin: 0 20px;">
+        <input type="hidden" name="hn" value="<?= htmlspecialchars($_SESSION['hn']) ?>">
+        <input type="hidden" name="selectedDate" id="selectedDate" value="<?= htmlspecialchars($selectedDate) ?>">
+        <input type="hidden" name="selectedTime" id="selectedTime">
+        <select name="department" id="departmentSelect" style="display: none;">
+            <?php
+            // ดึงชื่อแผนกทั้งหมดที่แสดงใน dropdown
+            $stmt->execute(); // reset the statement to fetch again
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+                <option value="<?= htmlspecialchars($row['name']) ?>"><?= htmlspecialchars($row['name']) ?></option>
+            <?php } ?>
+        </select>
+        <button class="rounded" id="confirmButton">ยืนยัน</button>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
