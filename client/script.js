@@ -68,6 +68,20 @@ $(document).ready(function () {
       $box.html(
         `<div class="dateWeek">${dayOfWeek}</div><br/><div class="dateNumber">${date}</div>`
       );
+      $('#department').change(function() {
+        var selectedDepartment = $(this).val();
+        console.log(selectedDepartment);
+    
+        $.ajax({
+            type: "POST",
+            url: "./home.php",  
+            data: { department: selectedDepartment },
+            success: function(response) {
+                console.log(response); // เพิ่มให้ดูผลลัพธ์ที่ได้จากการส่งคืนมาจาก PHP
+            }
+        });
+    });
+    
 
 $box.on("click", () => {
     const formattedDate = formatDateToDDMMYYYY(dateForButton); // จัดรูปแบบวันที่
@@ -129,24 +143,25 @@ $box.on("click", () => {
 });
 
 // อัปเดต AJAX function
-function sendTime(time) {
-    // แสดงค่าที่คุณคลิกใน console
-    console.log("Selected time: " + time);
+// function sendTime(time) {
+//     // แสดงค่าที่คุณคลิกใน console
+//     console.log("Selected time: " + time);
 
-    // ส่งค่าที่เลือกไปยังเซิร์ฟเวอร์
-    fetch('./home.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ selectedTime: time }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Response from server:", data);
-        // ทำสิ่งที่คุณต้องการกับ response ที่ได้รับที่นี่
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
-}
+//     // ส่งค่าที่เลือกไปยังเซิร์ฟเวอร์
+//     fetch('./home.php', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ selectedTime: time }),
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log("Response from server:", data);
+//         // ทำสิ่งที่คุณต้องการกับ response ที่ได้รับที่นี่
+//     })
+//     .catch((error) => {
+//         console.error("Error:", error);
+//     });
+// }
+

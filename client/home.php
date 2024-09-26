@@ -8,14 +8,19 @@ if (!isset($_SESSION['hn'])) {
 
 require_once '../config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $_SESSION['selectedDate'] = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : null;
-    $_SESSION['selectedTimeSlot'] = isset($_POST['timeSlot']) ? htmlspecialchars($_POST['timeSlot']) : null;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $_SESSION['selectedDate'] = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : null;
+        // $_SESSION['selectedTimeSlot'] = isset($_POST['timeSlot']) ? htmlspecialchars($_POST['timeSlot']) : null;
+        $_SESSION['selected_department'] = isset($_POST['department']) ? htmlspecialchars($_POST['department']) : 'ห้องตรวจโรคทั่วไป';
 
-    
-    echo json_encode($_SESSION['selectedDate']);
-    echo $_SESSION['hn'];
-}
+        // echo json_encode($_SESSION['selectedDate']);
+        // echo $_SESSION['hn'];
+
+        // echo json_encode($_SESSION['selected_department']);
+        // echo $_SESSION['selected_department'];
+        
+
+    }
 
 // ส่วนนี้แยกการแสดงผลปุ่มออกจากการส่ง session กลับ
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -125,10 +130,10 @@ try {
             <p>ระบุแผนก</p>
         </div>
         <div class="dropdown">
-            <select class="department" id="department" style="background-color: #fff; " name="selectedDepartment">
+            <select class="department" id="department" style="background-color: #fff; " name="department">
                 <option value="" disabled selected>เลือกแผนก</option>
                 <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
-                    <option><?= htmlspecialchars($row['name']) ?></option>
+                    <option value="<?= htmlspecialchars($row['name']) ?>"><?= htmlspecialchars($row['name']) ?></option>
                 <?php } ?>
             </select>
         </div>

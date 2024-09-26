@@ -13,15 +13,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_SESSION['selectedDate'])) {
         $selectedDate = $_SESSION['selectedDate'];
         $hn = $_SESSION['hn'];
+        $department = $_SESSION['selected_department'];
 
         // สร้างคำสั่ง SQL เพื่อบันทึกข้อมูล
-        $sql = "INSERT INTO reserve_time (date, hn) VALUES (:selectedDate, :hn)"; // แก้ไขชื่อ table และ column ให้ตรงกับฐานข้อมูลของคุณ
+        $sql = "INSERT INTO reserve_time (date, hn, dept) VALUES (:selectedDate, :hn, :department)"; // แก้ไขชื่อ table และ column ให้ตรงกับฐานข้อมูลของคุณ
 
         try {
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':selectedDate', $selectedDate);
             $stmt->bindParam(':hn', $hn);
-            $stmt->execute();
+            $stmt->bindParam(':department', $department);
+            $stmt->execute(); 
 
             echo "บันทึกวันที่สำเร็จ: " . htmlspecialchars($selectedDate);
         } catch (PDOException $e) {
