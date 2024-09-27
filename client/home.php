@@ -1,4 +1,4 @@
-<?php
+ <?php
 session_start();
 
 if (!isset($_SESSION['hn'])) {
@@ -8,19 +8,21 @@ if (!isset($_SESSION['hn'])) {
 
 require_once '../config.php';
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $_SESSION['selectedDate'] = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : null;
-        // $_SESSION['selectedTimeSlot'] = isset($_POST['timeSlot']) ? htmlspecialchars($_POST['timeSlot']) : null;
-        $_SESSION['selected_department'] = isset($_POST['department']) ? htmlspecialchars($_POST['department']) : 'ห้องตรวจโรคทั่วไป';
 
-        // echo json_encode($_SESSION['selectedDate']);
-        // echo $_SESSION['hn'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['selectedDate'] = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : 'No Date';
+    $_SESSION['selected_department'] = isset($_POST['department']) ? htmlspecialchars($_POST['department']) : 'ห้องตรวจโรคทั่วไป';
+    $selectedTime = isset($_POST['selectedTime']) ? htmlspecialchars($_POST['selectedTime']) : 'No time';
 
-        // echo json_encode($_SESSION['selected_department']);
-        // echo $_SESSION['selected_department'];
-        
+    // ส่งผลลัพธ์กลับไปยัง AJAX
+    echo "Selected Date: " . $_SESSION['selectedDate'] . "<br>";
+    echo "Selected Department: " . $_SESSION['selected_department'] . "<br>";
+    echo "Selected Time Slot: " . $selectedTime;
+}
 
-    }
+
+
+
 
 // ส่วนนี้แยกการแสดงผลปุ่มออกจากการส่ง session กลับ
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -97,7 +99,7 @@ try {
     <header>
         <div class="dataMain">
             <h2 style="font-size: 2rem; font-weight: 600;">HN <?= htmlspecialchars($_SESSION['hn']) ?></h2>
-            <!-- <h2>คุณ </h2> -->
+            <h2>คุณ </h2> 
             <a href="../logout.php" style="
             background-color: #fff;
             font-weight: 600;
@@ -132,7 +134,8 @@ try {
         <div class="dropdown">
             <select class="department" id="department" style="background-color: #fff; " name="department">
                 <option value="" disabled selected>เลือกแผนก</option>
-                <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+                <?php
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
                     <option value="<?= htmlspecialchars($row['name']) ?>"><?= htmlspecialchars($row['name']) ?></option>
                 <?php } ?>
             </select>
@@ -175,22 +178,12 @@ try {
             </div>
 
         </div>
-    </div>
-    <div class="submit" style="margin: 0 20px;">
-        <input type="hidden" name="hn" value="<?= htmlspecialchars($_SESSION['hn']) ?>">
-        <input type="hidden" name="selectedDate" id="selectedDate" value="<?= htmlspecialchars($selectedDate) ?>">
-        <input type="hidden" name="selectedTime" id="selectedTime">
-        <select name="department" id="departmentSelect" style="display: none;">
-            <?php
-            // ดึงชื่อแผนกทั้งหมดที่แสดงใน dropdown
-            $stmt->execute(); // reset the statement to fetch again
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
-                <option value="<?= htmlspecialchars($row['name']) ?>"><?= htmlspecialchars($row['name']) ?></option>
-            <?php } ?>
-        </select>
 
-        <form id="confirmForm" method="POST" action="../process.php"> <!-- เปลี่ยน action ตามที่คุณต้องการ -->
-            <button type="submit">ยืนยัน</button>
+        <form action="../process.php" method="POST" id="confirmForm">
+
+            <div class="submit">
+                <button type="submit">ยืนยัน</button>
+            </div>
         </form>
 
     </div>
@@ -202,3 +195,8 @@ try {
 </body>
 
 </html>
+
+
+
+
+

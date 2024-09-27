@@ -9,20 +9,25 @@ if (!isset($_SESSION['hn'])) {
 require_once './config.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['selectedTime'] = $_POST['selectedTime'] ?? null;
+
+
     // ตรวจสอบว่ามีค่า selectedDate ใน SESSION หรือไม่
-    if (isset($_SESSION['selectedDate'])) {
+    if (isset($_SESSION['selectedDate']) && isset($_SESSION['selectedTime'])) {
         $selectedDate = $_SESSION['selectedDate'];
         $hn = $_SESSION['hn'];
         $department = $_SESSION['selected_department'];
+        $selectedTime = $_SESSION['selectedTime'];
 
         // สร้างคำสั่ง SQL เพื่อบันทึกข้อมูล
-        $sql = "INSERT INTO reserve_time (date, hn, dept) VALUES (:selectedDate, :hn, :department)"; // แก้ไขชื่อ table และ column ให้ตรงกับฐานข้อมูลของคุณ
+        $sql = "INSERT INTO reserve_time (date, hn, dept, reserve_time) VALUES (:selectedDate, :hn, :department, :selectedTime)"; // แก้ไขชื่อ table และ column ให้ตรงกับฐานข้อมูลของคุณ
 
         try {
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':selectedDate', $selectedDate);
             $stmt->bindParam(':hn', $hn);
             $stmt->bindParam(':department', $department);
+            $stmt->bindParam(':selectedTime', $selectedTime);
             $stmt->execute(); 
 
             echo "บันทึกวันที่สำเร็จ: " . htmlspecialchars($selectedDate);
