@@ -9,15 +9,25 @@ if (!isset($_SESSION['hn'])) {
 require_once '../config.php';
 
 
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     $_SESSION['selectedDate'] = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : 'No Date';
+//     $_SESSION['selected_department'] = isset($_POST['department']) ? htmlspecialchars($_POST['department']) : 'ห้องตรวจโรคทั่วไป';
+//     $selectedTime = isset($_POST['selectedTime']) ? htmlspecialchars($_POST['selectedTime']) : 'No time';
+
+//     // ส่งผลลัพธ์กลับไปยัง AJAX
+//     echo "Selected Date: " . $_SESSION['selectedDate'] . "<br>";
+//     echo "Selected Department: " . $_SESSION['selected_department'] . "<br>";
+//     echo "Selected Time Slot: " . $selectedTime;
+// }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['selectedDate'] = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : 'No Date';
     $_SESSION['selected_department'] = isset($_POST['department']) ? htmlspecialchars($_POST['department']) : 'ห้องตรวจโรคทั่วไป';
-    $selectedTime = isset($_POST['selectedTime']) ? htmlspecialchars($_POST['selectedTime']) : 'No time';
+    $_SESSION['selectedTime'] = isset($_POST['selectedTime']) ? htmlspecialchars($_POST['selectedTime']) : 'No time';
 
     // ส่งผลลัพธ์กลับไปยัง AJAX
     echo "Selected Date: " . $_SESSION['selectedDate'] . "<br>";
     echo "Selected Department: " . $_SESSION['selected_department'] . "<br>";
-    echo "Selected Time Slot: " . $selectedTime;
+    echo "Selected Time Slot: " . $_SESSION['selectedTime'];
 }
 
 

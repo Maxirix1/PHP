@@ -9,11 +9,9 @@ if (!isset($_SESSION['hn'])) {
 require_once './config.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $_SESSION['selectedTime'] = $_POST['selectedTime'] ?? null;
-
 
     // ตรวจสอบว่ามีค่า selectedDate ใน SESSION หรือไม่
-    if (isset($_SESSION['selectedDate']) && isset($_SESSION['selectedTime'])) {
+    if (isset($_SESSION['selectedDate'])) {
         $selectedDate = $_SESSION['selectedDate'];
         $hn = $_SESSION['hn'];
         $department = $_SESSION['selected_department'];
