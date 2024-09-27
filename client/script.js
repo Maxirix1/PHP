@@ -244,7 +244,7 @@ $(document).ready(function () {
         // ตั้งค่า selectedDate ใน data attribute
         $container.data("selectedDate", formattedDate);
 
-        const selectedDepartment = $("#departmentSelect").val();
+        const selectedDepartment = $("#department").val();
         sendDateAndDepartment(formattedDate, selectedDepartment); // ส่งวันที่และแผนก
 
       });
@@ -314,8 +314,8 @@ $(document).ready(function () {
 
 function sendTime(time) {
   // เก็บค่าที่ต้องการส่ง
-  const selectedDate = $("#dateContainer").data("selectedDate"); // หาค่าจาก data attribute
-  const selectedDepartment = $("#departmentSelect").val(); // เก็บแผนกที่เลือก
+  const selectedDate = $("#dateContainer").data("selectedDate"); // หาค่า
+  const selectedDepartment = $("#department").val(); // เก็บแผนก
 
   console.log("Selected time: " + time);
   console.log("Selected date: " + selectedDate);
@@ -326,8 +326,8 @@ function sendTime(time) {
     method: "POST",
     data: {
       selectedTime: time,
-      selectedDate: selectedDate, // ส่งวันที่ไปด้วย
-      department: selectedDepartment, // ส่งแผนกไปด้วย
+      selectedDate: selectedDate,
+      department: selectedDepartment,
     },
     success: function (response) {
       console.log("Response:", response);
