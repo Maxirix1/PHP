@@ -24,9 +24,9 @@ session_start();
                     unset($_SESSION['error']);
                 }
                 ?>
-                <h1 class="text-4xl font-medium text-[#fff]">LOGIN</h1>
+                <h1 class="text-4xl font-medium text-[#fff]">เข้าสู่ระบบ</h1>
 
-                <form action="../login_db.php" method="POST">
+                <form action="../server/login_db.php" method="POST">
                     <p class="text-white">HN Number :</p>
                     <input type="number" name="hn" id="hn"
                         class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -39,9 +39,9 @@ session_start();
                         class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none">
                         LOGIN
                     </button>
-                    <!-- <p class="text-[#e8e6e6] font-light mt-6">คุณยังไม่มีบัญชีใช่หรือไม่ ? 
+                    <p class="text-[#e8e6e6] font-light mt-6">คุณยังไม่มีบัญชีใช่หรือไม่ ? 
                         <a href="signup.php" class="text-[#002b4d] font-semibold">สมัครสมาชิก</a> ตอนนี้!
-                    </p> -->
+                    </p>
                 </form>
             </div>
         </div>

@@ -2,11 +2,13 @@
 session_start();
 
 if (!isset($_SESSION['hn'])) {
-    header('Location: ./login.php');
+    header('Location: ../../client/login.php');
     exit();
 }
+header('Location: ../../client/homeTH');
 
-require_once './config.php'; 
+
+require_once '../config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -26,9 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindParam(':hn', $hn);
             $stmt->bindParam(':department', $department);
             $stmt->bindParam(':selectedTime', $selectedTime);
-            $stmt->execute(); 
-
-            echo "บันทึกวันที่สำเร็จ: " . htmlspecialchars($selectedDate);
+            $stmt->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }

@@ -165,20 +165,20 @@
 // }
 
 
-const daysTH = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+const daysTH = ["Sun.", "Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat."];
 const monthsTH = [
-  "มกราคม",
-  "กุมภาพันธ์",
-  "มีนาคม",
-  "เมษายน",
-  "พฤษภาคม",
-  "มิถุนายน",
-  "กรกฎาคม",
-  "สิงหาคม",
-  "กันยายน",
-  "ตุลาคม",
-  "พฤศจิกายน",
-  "ธันวาคม",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 let currentDate = new Date();
@@ -256,7 +256,7 @@ $(document).ready(function () {
 
   function sendDateAndDepartment(selectedDate, selectedDepartment) {
     $.ajax({
-      url: "./home.php",
+      url: "./index.php",
       method: "POST",
       data: {
         selectedDate: selectedDate,
@@ -312,29 +312,73 @@ $(document).ready(function () {
   updateDates();
 });
 
-function sendTime(time) {
-  // เก็บค่าที่ต้องการส่ง
-  const selectedDate = $("#dateContainer").data("selectedDate"); // หาค่า
-  const selectedDepartment = $("#department").val(); // เก็บแผนก
+// ฟังก์ชันส่งข้อมูล
+function sendTime(slot, button) {
+    const selectedDate = $("#dateContainer").data("selectedDate");
+    const selectedDepartment = $("#department").val();
 
-  console.log("Selected time: " + time);
-  console.log("Selected date: " + selectedDate);
-  console.log("Selected department: " + selectedDepartment);
+    if (!selectedDate || !selectedDepartment || !slot) {
+      Swal.fire({
+        title: "Select Department?",
+        text: "You must select the department you want to book.",
+        icon: "question"
+      });
+        return;
+    }
 
-  $.ajax({
-    url: "./home.php",
-    method: "POST",
-    data: {
-      selectedTime: time,
-      selectedDate: selectedDate,
-      department: selectedDepartment,
-    },
-    success: function (response) {
-      console.log("Response:", response);
-      $(".selectTime").html(response);
-    },
-    error: function (xhr, status, error) {
-      console.error("Error:", error);
-    },
-  });
+    console.log("Selected time: " + slot);
+    console.log("Selected date: " + selectedDate);
+    console.log("Selected department: " + selectedDepartment);
+
+    $.ajax({
+        url: "./index.php",
+        method: "POST",
+        data: {
+            selectedTime: slot, // ใช้ slot เป็นเวลา
+            selectedDate: selectedDate,
+            department: selectedDepartment,
+        },
+        success: function (response) {
+            console.log("Response:", response);
+            $(".selectTime").html(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        },
+    });
+
+    // Change the button color after sending data
+    changeButtonColor(button);
 }
+
+// let lastClickedButton = null;
+// const originalColors = {}; 
+
+// function sendTime(slot, button) {
+//     if (lastClickedButton && lastClickedButton !== button) {
+//         lastClickedButton.style.backgroundColor = originalColors[lastClickedButton.innerHTML];
+//     }
+
+//     if (!originalColors[button.innerHTML]) {
+//         originalColors[button.innerHTML] = button.style.backgroundColor;
+//     }
+
+//     button.style.backgroundColor = 'green';
+
+//     lastClickedButton = button;
+// }
+function handleButtonClick(slot, isReserved) {
+  if (isReserved) {
+      // Show SweetAlert when button for reserved time is clicked
+      Swal.fire({
+          icon: 'warning',
+          title: 'Unable to select time',
+          text: 'This time is already booked. Please choose another time!',
+          confirmButtonText: 'OK'
+      });
+  } else {
+      sendTime(slot);
+      changeButtonColor(button); // You may need to pass the button element if you want to change color
+  }
+}
+

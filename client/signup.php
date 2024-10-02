@@ -1,7 +1,3 @@
-<!-- <?php
-session_start()
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,8 +5,8 @@ session_start()
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>สมัครสมาชิก | AZTEC</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./style/signup.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
@@ -24,21 +20,29 @@ session_start()
                     unset($_SESSION['error']);
                 }
                 ?>
-                <h1 class="text-4xl font-medium text-[#fff] textshadow-xl">SIGNUP</h1>
-                <h1 class="textAlert text-red-500"></h1>
+                <h1 class="text-4xl font-medium text-[#fff]">SIGNUP</h1>
+                <!-- <h1 class="textAlert text-red-500"></h1> -->
                 <form action="../signup_db.php" method="POST">
-                    <input type="text" id="username" name="username"
+                    <p class="text-white">ชื่อ-นามสกุล :</p>
+                    <input type="number" name="hn" id="hn"
                         class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder=" username" required />
-                    <input type="email" id="email" name="email"
-                        class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="email" required />
-                    <input type="password" id="password" name="password"
-                        class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder=" password" required />
-                    <input type="password" id="confirmPassword" name="confirmPassword"
+                        placeholder="HN Number" required />
+                    <p class="text-white">Email :</p>
+                    <input type="password" name="password" id="password"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="confirm password" required />
+                        placeholder="Password" required />
+                    <p class="text-white">เลขบัตรประชาชน :</p>
+                    <input type="password" name="password" id="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        placeholder="Password" required />
+                    <p class="text-white">กำหนดรหัสผ่าน :</p>
+                    <input type="password" name="password" id="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        placeholder="Password" required />
+                    <p class="text-white">ยืนยันรหัสผ่าน :</p>
+                    <input type="password" name="password" id="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        placeholder="Password" required />
 
 
                     <button type="submit" name="signupSubmit"
@@ -50,6 +54,7 @@ session_start()
 
         </div>
     </section>
+    
 </body>
 
-</html> -->
+</html>

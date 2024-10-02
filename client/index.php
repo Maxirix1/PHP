@@ -13,12 +13,12 @@
     <div class="container">
       <img src="./assets/logoFull.png" alt="">
       <div class="content">
-        <!-- <div class="signup">
-          <a href="signup.php">สมัครสมาชิก</a>
-        </div> -->
-
+        
         <div class="login">
-          <a href="login.php">เข้าสู่ระบบ</a>
+          <a href="./login.php">เข้าสู่ระบบ</a>
+        </div>
+        <div class="signup">
+          <a href="./signup.php">สมัครสมาชิก</a>
         </div>
       </div>
 

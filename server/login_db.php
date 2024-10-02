@@ -14,11 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
     if ($user && $password === $defaultPassword) {
         $_SESSION['hn'] = $user['hn'];
-        header('Location: ./client/home.php');
+        header('Location: ../client/homeTH');
         exit();
     } else {
         $_SESSION['error'] = 'HN หรือ รหัสผ่านไม่ถูกต้อง';
-        header('Location: ./client/login.php');
+        header('Location: ../client/login.php');
         exit();
     }
 }

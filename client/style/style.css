@@ -188,6 +188,7 @@ select {
   overflow-y: scroll;
   scrollbar-width: 40px;
   height: 300px;
+  margin-top: 80px;
 }
 
 .time {
@@ -320,8 +321,40 @@ select {
   border-radius: 5px;
   padding: 10px 15px;
   text-align: center;
+  cursor: pointer;
 }
-.buttonDate:hover {
-  background-color: #3bbd3d;
-  color: #fff;
+
+.contentButton button:hover {
+  background-color: #0a8b0e;
+
 }
+.buttonDate.active {
+  background-color: #3e8e41; /* สีที่ต้องการเมื่อค้าง */
+}
+/* .buttonDate.active {
+  background-color: #4CAF50; สีพื้นหลังเมื่อถูกคลิก 
+} */
+ .timeSelected > div {
+  background-color: #fff;
+  color: #024783;
+  border: 1px solid #024783;
+  border-radius: 10px;
+  height: 50px;
+  margin: 0 40px;
+  margin-bottom: 100px;
+  padding: 5px 50px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+ }
+ .timeSelected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  background-color: #fff;
+ }
+

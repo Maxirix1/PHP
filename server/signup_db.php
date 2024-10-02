@@ -1,4 +1,9 @@
 <?php 
+if (!isset($_SESSION['hn'])) {
+    header('Location: ../client/login.php');
+    exit();
+}
+
     // session_start();
     // require_once ("./config.php");
 
