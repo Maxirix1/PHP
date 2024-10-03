@@ -11,7 +11,7 @@
   font-family: "Kanit", sans-serif;
 }
 section {
-  padding: 20px;
+  padding: 20px 10px;
   background: rgb(42, 189, 255);
   background: radial-gradient(
     circle,

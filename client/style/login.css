@@ -11,18 +11,18 @@
   font-family: "Kanit", sans-serif;
 }
 section {
-    padding: 20px;
-    background: rgb(42, 189, 255);
-    background: radial-gradient(
-      circle,
-      rgba(42, 189, 255, 1) 0%,
-      rgba(0, 75, 143, 1) 100%
-    );
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  padding: 20px;
+  background: rgb(42, 189, 255);
+  background: radial-gradient(
+    circle,
+    rgba(42, 189, 255, 1) 0%,
+    rgba(0, 75, 143, 1) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -40,10 +40,12 @@ section {
   justify-content: center;
   flex-direction: column;
   gap: 30px;
+  width: 100%;
 }
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 img {
