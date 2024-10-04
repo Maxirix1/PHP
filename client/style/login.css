@@ -25,6 +25,7 @@ section {
 }
 .container {
   display: flex;
+  height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: start;
@@ -47,7 +48,9 @@ form {
   flex-direction: column;
   width: 100%;
 }
-
+#submit {
+  border: 1px solid #72c6f3 ;
+}
 img {
   width: 50%;
   /* margin-bottom: 20vh; */

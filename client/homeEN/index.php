@@ -211,8 +211,20 @@ try {
 <body>
     <header>
         <div class="dataMain">
-            <h2 style="font-size: 2rem; font-weight: 600;">HN <?= htmlspecialchars($_SESSION['hn']) ?></h2>
+            <div class="data">
+                <h3 class="name">Hi, <?= htmlspecialchars($_SESSION['username']) ?></h3>
+                <h3 class="hn">HN <?= htmlspecialchars($_SESSION['hn']) ?></h3>
+            </div>
             <!-- <h2>คุณ </h2>  -->
+
+        </div>
+        <div class="language">
+
+            <select class="dropdownLang" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="th">ไทย</option>
+            </select>
+
             <a href="../../server/logout.php" style="
             background-color: #fff;
             font-weight: 600;
@@ -222,15 +234,6 @@ try {
             margin-top: 10px;
             z-index: 999;
             ">LOGOUT</a>
-        </div>
-        <div class="language">
-
-            <select class="dropdownLang" onchange="changeLanguage()">
-                <option value="en">English</option>
-                <option value="th">ไทย</option>
-            </select>
-
-
             <script>
                 function changeLanguage() {
                     const dropdown = document.querySelector('.dropdownLang');

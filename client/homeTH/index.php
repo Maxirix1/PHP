@@ -211,8 +211,20 @@ try {
 <body>
     <header>
         <div class="dataMain">
-            <h2 style="font-size: 2rem; font-weight: 600;">HN <?= htmlspecialchars($_SESSION['hn']) ?></h2>
+            <div class="data">
+                <h3 class="name">คุณ <?= htmlspecialchars($_SESSION['username']) ?></h3>
+                <h3 class="hn">HN <?= htmlspecialchars($_SESSION['hn']) ?></h3>
+            </div>
             <!-- <h2>คุณ </h2>  -->
+
+        </div>
+        <div class="language">
+
+            <select class="dropdownLang" onchange="changeLanguage()">
+                <option value="th">ไทย</option>
+                <option value="en">English</option>
+            </select>
+
             <a href="../../server/logout.php" style="
             background-color: #fff;
             font-weight: 600;
@@ -221,14 +233,7 @@ try {
             border-radius: 5px;
             margin-top: 10px;
             z-index: 999;
-            ">ออกจากระบบ</a>
-        </div>
-        <div class="language">
-
-            <select class="dropdownLang" onchange="changeLanguage()">
-                <option value="th">ไทย</option>
-                <option value="en">English</option>
-            </select>
+            " class="logout">ออกจากระบบ</a>
 
 
             <script>
@@ -255,18 +260,12 @@ try {
             </div>
             <h1 class="textHead">จองคิวนัดหมาย</h1>
         </div>
-
-        <div class="textSelect">
-            <p>ระบุแผนก</p>
-        </div>
         <div class="dropdown">
-            <select class="department" id="department" style="background-color: #fff; " name="department" required>
-                <option value="" disabled selected>เลือกแผนก</option>
-                <?php
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
-                    <option value="<?= htmlspecialchars($row['name']) ?>"><?= htmlspecialchars($row['name']) ?></option>
-                <?php } ?>
-            </select>
+            <p>ระบุแผนก</p>
+
+            <div class="selectDepartment">
+                <h1>เลือกแผนก</h1>
+            </div>
         </div>
 
         <div class="dataReserve">

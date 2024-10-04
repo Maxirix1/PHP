@@ -12,13 +12,20 @@
 }
 
 /* All width: 430 height: 932 */
-
+body {
+  background: rgb(0, 75, 143);
+  background: linear-gradient(
+    270deg,
+    rgba(0, 75, 143, 1) 0%,
+    rgba(42, 189, 255, 1) 100%
+  );
+}
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-align: center;
-  padding: 1vh 10vw;
+  padding: 1vh 1vw;
   background: rgb(0, 75, 143);
   background: linear-gradient(
     270deg,
@@ -26,8 +33,18 @@ header {
     rgba(42, 189, 255, 1) 100%
   );
   color: #fff;
-  height: 13vh;
-  padding-bottom: 40px;
+  height: 16vh;
+  padding-bottom: 30px;
+  /* margin-bottom: 50px; */
+}
+.data {
+  display: flex;
+  align-items: start;
+   justify-content: start;
+   margin-top: -30px;
+   line-height: 28px;
+   flex-direction: column;
+   margin-left: -30px;
 }
 header .dataMain h2 {
   font-weight: 400;
@@ -42,6 +59,14 @@ header .dataMain h2 {
   margin-top: 25px;
   margin-left: 84px;
 }
+.data .name {
+  font-size: 28px;
+  font-weight: 600;
+}
+.data .hn {
+  font-size: 20px;
+  font-weight: 500;
+}
 .data .dropdown {
   font-size: 10px;
   border: 0px solid #00000000;
@@ -49,15 +74,22 @@ header .dataMain h2 {
 .containerMain {
   background-color: #ffffff;
   border-radius: 25px;
-  margin-top: -25px;
+  margin-top: -20px;
 }
 
 .contenthead {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   padding-right: 6vw;
   padding-top: 10px;
+}
+.language {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  margin-right: 10px;
 }
 .logo {
   background-color: rgb(255, 255, 255);
@@ -93,6 +125,15 @@ header .dataMain h2 {
 }
 .dropdown {
   padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.selectDepartment {
+  border: 1px solid #173a9b;
+  padding: 10px 200px;
+  color: #162e71;
+  border-radius: 10px;
 }
 select {
   width: 100%;
@@ -102,6 +143,9 @@ select {
   font-size: 1.5rem;
   text-align: center;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #156db5;
 }
 .department option {
@@ -111,13 +155,12 @@ select {
 .selectTime {
   padding: 8px 25px;
 }
-.textSelect {
-  background-color: #ffffff;
-  padding: 5px;
-  margin-bottom: -10px;
-  position: absolute;
-  left: 50px;
-  color: #0a588b;
+.dropdown p {
+  color: #162e71;
+  background-color: #fff;
+  margin-bottom: -13px;
+  z-index: 999;
+  padding: 5px 7px;
 }
 .dataReserve > p {
   font-size: 1.3rem;

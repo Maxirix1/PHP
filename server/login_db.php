@@ -1,26 +1,27 @@
 <?php
 session_start();
+
 require_once './config.php';
 
-if ($_SERVER["REQUEST_METHOD"] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hn = $_POST['hn'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare('SELECT * FROM reserve_time WHERE hn = :hn');
+    $stmt = $conn->prepare('SELECT * FROM users_signup WHERE userHN = :hn');
     $stmt->execute(['hn' => $hn]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $defaultPassword = $hn . '00';
-
-    if ($user && $password === $defaultPassword) {
-        $_SESSION['hn'] = $user['hn'];
+    if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['userID'] = $user['userId'];
+        $_SESSION['hn'] = $user['userHn'];
+        $_SESSION['username'] = $user['userName'];
         header('Location: ../client/homeTH');
+
         exit();
     } else {
-        $_SESSION['error'] = 'HN หรือ รหัสผ่านไม่ถูกต้อง';
-        header('Location: ../client/login.php');
+        $_SESSION['error'] = 'เลข HN หรือ รหัสผ่านไม่ถูกต้อง';
+        header("Location: ../client/login.php");
         exit();
     }
 }
 ?>
-

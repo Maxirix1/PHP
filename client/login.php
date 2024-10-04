@@ -9,6 +9,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เข้าสู่ระบบ | AZTEC</title>
     <link rel="stylesheet" href="./style/login.css" />
+    <link rel="icon" type="image/x-icon" href="./assets/logoHead.png">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -22,6 +23,9 @@ session_start();
                 if (isset($_SESSION["error"])) {
                     echo '<div class="bg-red-500 px-10 py-2 rounded-md"><p class="text-white" >' . $_SESSION["error"] . '</p></div>';
                     unset($_SESSION['error']);
+                } if (isset($_SESSION["success"])) {
+                    echo '<div class="bg-green-500 px-10 py-2 rounded-md"><p class="text-white" >' . $_SESSION["success"] . '</p></div>';
+                    unset($_SESSION['success']);
                 }
                 ?>
                 <h1 class="text-4xl font-medium text-[#fff]">เข้าสู่ระบบ</h1>
@@ -112,8 +116,8 @@ session_start();
                         placeholder="Password" required /> -->
 
 
-                    <button type="submit" name="signupSubmit"
-                        class="mt-4 text-white bg-[#05356b] hover:bg-[#041b36] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2focus:outline-none">ยืนยัน</button>
+                    <button type="submit" name="submit" id="submit"
+                        class="mt-8 text-white bg-[#05356b] hover:bg-[#041b36] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2focus:outline-none">ยืนยัน</button>
                     <p class="text-[#e8e6e6] font-light mt-2 mb-8 text-center">คุณยังไม่มีบัญชีใช่หรือไม่ ? <a
                             href="signup.php" class="text-[#fff] font-semibold underline">สมัครสมาชิก </a>ที่นี่!</p>
                 </form>

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>สมัครสมาชิก | AZTEC</title>
+    <link rel="icon" type="image/x-icon" href="./assets/logoHead.png">
     <link rel="stylesheet" href="./style/signup.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -15,6 +19,7 @@
             <img src="./assets/logoFull.png" alt="">
             <div class="content">
                 <?php
+                
                 if (isset($_SESSION["error"])) {
                     echo '<div class="bg-red-500 px-10 py-2 rounded-md"><p class="text-white" >' . $_SESSION["error"] . '</p></div>';
                     unset($_SESSION['error']);
@@ -36,7 +41,8 @@
                                 </svg>
                             </span>
 
-                            <input type="text"
+                            <!-- ----------User Name---------- -->
+                            <input type="text" id="username" name="username" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 placeholder="ชื่อ - นามสกุล">
                         </div>
@@ -52,7 +58,8 @@
 
                             </span>
 
-                            <input type="number"
+                            <!-- -------------HN------------- -->
+                            <input type="number" id="hn" name="hn" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 placeholder="เลขประจำตัวผู้ป่วย">
                         </div>
@@ -72,7 +79,8 @@
 
                             </span>
 
-                            <input placeholder="วัน เดือน ปี เกิด"
+                            <!-- ------------------Birth Date------------- -->
+                            <input placeholder="วัน เดือน ปี เกิด" id="birthDate" name="birthDate" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" />
                         </div>
@@ -88,7 +96,8 @@
 
                             </span>
 
-                            <input type="number"
+                            <!-- ----------------Phone Number------------ -->
+                            <input type="number" id="phoneNumber" name="phoneNumber" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 placeholder="เบอร์โทร">
                         </div>
@@ -106,7 +115,8 @@
                             </svg>
                         </span>
 
-                        <input type="text"
+                        <!-- ---------------------address-------------------- -->
+                        <input type="text" id="address" name="address" required
                             class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                             placeholder="ที่อยู่ปัจจุบัน">
                     </div>
@@ -121,7 +131,8 @@
                                 </svg>
                             </span>
 
-                            <input type="text"
+                            <!-- ------------Father Name-------------- -->
+                            <input type="text" id="fatherName" name="fatherName" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 placeholder="ชื่อ - นามสกุล บิดา">
                         </div>
@@ -134,7 +145,8 @@
                                 </svg>
                             </span>
 
-                            <input type="text"
+                            <!-- -----------------Mother Name----------------- -->
+                            <input type="text" id="motherName" name="motherName" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 placeholder="ชื่อ - นามสกุล มารดา">
                         </div>
@@ -152,7 +164,9 @@
 
                             </span>
 
-                            <input type="text"
+
+                            <!-- ------------------urgent Name------------------- -->
+                            <input type="text" id="urgentName" name="urgentName" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 placeholder="ชื่อ - นามสกุล ผู้ติดต่อกรณีฉุกเฉิน">
                         </div>
@@ -168,7 +182,8 @@
 
                             </span>
 
-                            <input type="number"
+                            <!-- ---------------------urgent Number---------------------- -->
+                            <input type="number" id="urgentNumber" name="urgentNumber" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                                 placeholder="เบอร์ผู้ติดต่อกรณีฉุกเฉิน">
                         </div>
@@ -179,7 +194,7 @@
                     <div class="flex-col gap-2 sm:flex flex-row md:flex flex-row">
                     <div class="w-full">
                         <div class="relative">
-                            <input id="hs-toggle-password" type="password"
+                            <input id="password" type="password" name="password" required
                                 class="py-3 px-6 pr-0 pe-10 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                 placeholder="กำหนดรหัสผ่าน">
                             <button type="button" onclick="togglePasswordVisibility()"
@@ -204,7 +219,7 @@
                     </div>
                     <div class="w-full mt-2 sm:mt-0">
                         <div class="relative">
-                            <input id="hs-toggle-password" type="password"
+                            <input id="password" type="password" name="confirmPassword" required
                                 class="py-3 px-6 pr-0 pe-10 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                 placeholder="ยืนยันรหัสผ่าน">
                             <button type="button" onclick="togglePasswordVisibility()"
@@ -231,7 +246,7 @@
 
                     <script>
                         function togglePasswordVisibility() {
-                            var passwordField = document.getElementById("hs-toggle-password");
+                            var passwordField = document.getElementById("password");
                             var eyeShow = document.getElementById("eye-show");
                             var eyeHide = document.getElementById("eye-hide");
 
@@ -249,7 +264,7 @@
 
 
                     <!-- <p class="text-white">Email :</p> -->
-                    <button type="submit" name="signupSubmit"
+                    <button type="submit" name="signupSubmit" id="submit"
                         class="mt-4 text-white bg-[#05356b] hover:bg-[#041b36] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2focus:outline-none">ยืนยัน</button>
                     <p class="text-[#e8e6e6] font-light mt-2 mb-8 text-center">คุณมีบัญชีแล้วใช่หรือไม่ ? <a href="login.php"
                             class="text-[#fff] font-semibold underline">เข้าสู่ระบบ </a>ตอนนี้!</p>
