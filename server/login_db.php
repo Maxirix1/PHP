@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+
+
 require_once './config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -24,4 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 }
+
+ini_set('display_errors', 0);
+error_reporting(0);
+
 ?>

@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(E_ALL);
 $serverName = "49.0.65.19";
 $database = "smart_queue";
 $username = "test";
@@ -11,11 +14,7 @@ try {
     // echo "Success";
     // echo"404 ERROR | Connect SUCCESS";
 } catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    // echo "Connection failed: " . $e->getMessage();
+    header('Location: ./500.html');
 }
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 ?>

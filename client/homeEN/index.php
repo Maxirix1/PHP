@@ -259,17 +259,12 @@ try {
             <h1 class="textHead">RESERVE</h1>
         </div>
 
-        <div class="textSelect">
-            <p>Department</p>
-        </div>
         <div class="dropdown">
-            <select class="department" id="department" style="background-color: #fff; " name="department" required>
-                <option value="" disabled selected>Select Department</option>
-                <?php
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
-                    <option value="<?= htmlspecialchars($row['name']) ?>"><?= htmlspecialchars($row['name']) ?></option>
-                <?php } ?>
-            </select>
+            <p>Department</p>
+
+            <div class="selectDepartment">
+                <h1>Select Department</h1>
+            </div>
         </div>
 
         <div class="dataReserve">

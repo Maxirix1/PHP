@@ -12,20 +12,12 @@
 }
 
 /* All width: 430 height: 932 */
-body {
-  background: rgb(0, 75, 143);
-  background: linear-gradient(
-    270deg,
-    rgba(0, 75, 143, 1) 0%,
-    rgba(42, 189, 255, 1) 100%
-  );
-}
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-align: center;
-  padding: 1vh 1vw;
+  padding: 1vh 35vw;
   background: rgb(0, 75, 143);
   background: linear-gradient(
     270deg,
@@ -33,18 +25,18 @@ header {
     rgba(42, 189, 255, 1) 100%
   );
   color: #fff;
-  height: 16vh;
-  padding-bottom: 30px;
+  height: 160px;
+  /* padding-bottom: 30px; */
   /* margin-bottom: 50px; */
 }
 .data {
   display: flex;
   align-items: start;
-   justify-content: start;
-   margin-top: -30px;
-   line-height: 28px;
-   flex-direction: column;
-   margin-left: -30px;
+  justify-content: start;
+  margin-top: -30px;
+  line-height: 28px;
+  flex-direction: column;
+  margin-left: -30px;
 }
 header .dataMain h2 {
   font-weight: 400;
@@ -73,7 +65,10 @@ header .dataMain h2 {
 }
 .containerMain {
   background-color: #ffffff;
-  border-radius: 25px;
+  border-radius: 25px 25px 0 0;
+  /* margin-top: -20px; */
+  height: auto;
+  padding: 0 30vw;
   margin-top: -20px;
 }
 
@@ -100,7 +95,7 @@ header .dataMain h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -6vh;
+  margin-top: -4vh;
 }
 .contenthead .logo img {
   width: 280px;
@@ -127,6 +122,7 @@ header .dataMain h2 {
   padding: 20px;
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
 }
 .selectDepartment {
@@ -134,6 +130,8 @@ header .dataMain h2 {
   padding: 10px 200px;
   color: #162e71;
   border-radius: 10px;
+  background-color: #fff;
+  cursor: pointer;
 }
 select {
   width: 100%;
@@ -159,6 +157,7 @@ select {
   color: #162e71;
   background-color: #fff;
   margin-bottom: -13px;
+  margin-left: -300px;
   z-index: 999;
   padding: 5px 7px;
 }
@@ -183,7 +182,7 @@ select {
   display: flex;
   text-align: center;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   margin: 20px 0;
 }
@@ -248,7 +247,7 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 .submit button {
   border: none;
@@ -335,7 +334,8 @@ select {
   width: 100%;
 }
 .dataMonthHead p {
-  width: 100%;
+  width: auto;
+  margin: 0 30px;
 }
 .dataMonthHead img {
   width: 45px;
@@ -369,7 +369,6 @@ select {
 
 .contentButton button:hover {
   background-color: #0a8b0e;
-
 }
 .buttonDate.active {
   background-color: #3e8e41; /* สีที่ต้องการเมื่อค้าง */
@@ -377,7 +376,7 @@ select {
 /* .buttonDate.active {
   background-color: #4CAF50; สีพื้นหลังเมื่อถูกคลิก 
 } */
- .timeSelected > div {
+.timeSelected > div {
   background-color: #fff;
   color: #024783;
   border: 1px solid #024783;
@@ -391,13 +390,136 @@ select {
   align-items: center;
   justify-content: center;
   position: absolute;
- }
- .timeSelected {
+}
+.timeSelected {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   text-align: center;
   background-color: #fff;
- }
+}
 
+.containerDepartment {
+  /* width: 60%; */
+  display: none;
+  /* display: flex; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.department {
+  border-radius: 10px;
+  box-shadow: 1px 1px 12px #3a839c4a;
+  background-color: #fff;
+  position: fixed;
+  padding: 10px 50px;
+  padding-bottom: 30px;
+  width: 90%;
+  height: auto;
+  z-index: 999;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  /* border: 1px solid #042c4f4b; */
+}
+.contentList {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+.listDepartment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  gap: 15px;
+  width: 100%;
+}
+.listDepartment > div {
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 3px 4px 8px #75a1c58f;
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  cursor: pointer;
+  gap: 10px;
+  /* min-width: 200px; */
+  flex: 1 1 30%;
+  max-width: 30%;
+}
+.listDepartment > div > svg {
+  color: #074478;
+  background-color: #a4c2dbc2;
+  padding: 6px;
+  border-radius: 4px;
+  width: 40px;
+  fill: #074478;
+  height: 40px;
+  stroke: #074478;
+}
+.listDepartment > div > span {
+  color: #162e71;
+  text-align: center;
+}
+
+.headDepart {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.headDepart p {
+  font-size: 1.5rem;
+  color: #162e71;
+  font-weight: 500;
+}
+.headDepart span {
+  font-size: 3rem;
+  font-weight: 200;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.headDepart span:hover {
+  scale: 0.89;
+  transition: 0.3s;
+}
+.listSubmit {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  gap: 10px;
+}
+.listSubmit button {
+  border: none;
+  background-color: #024783;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px 20px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.listSubmit button:hover {
+  transition: 0.3s;
+  background-color: #042c4f;
+}
+#cancle {
+  background-color: transparent;
+  border: 1px solid #162e71;
+  color: #162e71;
+}
+#cancle:hover {
+  background-color: #042c4f4c;
+  color: #fff;
+  transition: 0.3s;
+  border-color: #fff;
+}

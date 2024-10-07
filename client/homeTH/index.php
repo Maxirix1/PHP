@@ -14,11 +14,11 @@ require_once '../../server/config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include '../../server/time.php';
 
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['selectedDate'] = isset($_POST['selectedDate']) ? htmlspecialchars($_POST['selectedDate']) : NULL;
         $_SESSION['selected_department'] = isset($_POST['department']) ? htmlspecialchars($_POST['department']) : 'ห้องตรวจโรคทั่วไป';
         $_SESSION['selectedTime'] = isset($_POST['selectedTime']) ? htmlspecialchars($_POST['selectedTime']) : NULL;
+
 
         // echo "Selected Date: " . $_SESSION['selectedDate'] . "<br>";
         // echo "Selected Department: " . $_SESSION['selected_department'] . "<br>";
@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // ดึงแผนกทั้งหมด
-$sql = "SELECT [name],[code] FROM [smart_queue].[dbo].[department]";
+$sql = "SELECT [name],[code],[svg_icon] FROM [smart_queue].[dbo].[department]";
 try {
     $stmt = $conn->query($sql);
 } catch (PDOException $e) {
@@ -206,6 +206,8 @@ try {
     <link rel="icon" type="image/x-icon" href="../assets/logoHead.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./popup.js"></script>
+
 </head>
 
 <body>
@@ -263,40 +265,57 @@ try {
         <div class="dropdown">
             <p>ระบุแผนก</p>
 
-            <div class="selectDepartment">
+            <button class="selectDepartment" id="openDepartmentBtn">
                 <h1>เลือกแผนก</h1>
-            </div>
+            </button>
         </div>
+
+        <section class="containerDepartment" id="department">
+            <div class="department">
+                <div class="headDepart">
+                    <p>เลือกแผนก</p>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="contentList">
+                    <div class="listDepartment">
+
+                        <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+                            <div class="departmentItem">
+                                <?= $row['svg_icon'] ?>
+                                <span><?= htmlspecialchars($row['name']) ?></span>
+                            </div>
+                        <?php } ?>
+
+                    </div>
+                </div>
+
+                <div class="listSubmit">
+
+                    <button>ยืนยัน</button>
+                    <button id="cancle">ยกเลิก</button>
+                </div>
+
+            </div>
+        </section>
 
         <div class="dataReserve">
             <!-- <div id="selectedTime" style="margin-top: 20px; font-size: 18px; color: #333;"></div> -->
 
             <p class="text">ระบุวันนัดหมาย</p>
             <div class="dataSelect">
-                <button id="prevDates">
-                    <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 12h4v24h-4zm7 12l17 12V12z" />
-                        <path d="M0 0h48v48H0z" fill="none" />
-                    </svg>
-                </button>
 
                 <div class="dataMonthHead">
                     <img src="../assets/calendar.png" alt="Calendar Icon">
-                    <p id="monthDisplay"></p>
+                    <p>กรุณาเลือกวันที่</p>
                 </div>
 
-                <button id="nextDates"><svg height="48" viewBox="0 0 48 48" width="48"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 36l17-12-17-12v24zm20-24v24h4V12h-4z" />
-                        <path d="M0 0h48v48H0z" fill="none" />
-                    </svg></button>
             </div>
-            <div id="dateContainer" class="container"></div>
+            <!-- <div id="dateContainer" class="container"></div> -->
 
 
             <div class="headText">
-                <h2 class="textSelectTime" style="padding:8px 25px;">เลือกเวลา</h2>
-                <a href="../history">ประวัติการจองทั้งหมดของคุณ</a>
+                <h2 class="text" style="padding:8px 25px;">เลือกเวลา</h2>
+                <a href="../history" class="history">ประวัติการจองทั้งหมดของคุณ</a>
             </div>
 
             <div class="containerDateSelect">

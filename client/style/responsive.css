@@ -1,175 +1,123 @@
-@media screen and (min-width: 700px) {
-  .textHead {
-    font-size: 4rem;
-  }
-}
-@media screen and (min-width: 1200px) {
+@media screen and (max-width: 1950px) {
   .containerMain {
-    padding: 0 200px;
-  }
-  .textSelect {
-    left: 320px;
-    /* margin-top: 10px; */
-    padding: 15px 10px;
-  }
-  .dropdown {
-    /* width: 70%; */
-    padding: 30px 170px;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .dataSelect {
-    padding: 0 200px;
-  }
-  .selectTime {
-    height: 350px;
-    padding: 13px 25px;
+    padding: 0 20vw;
   }
   header {
-    justify-content: center;
-    gap: 30vw;
+    padding: 1vh 2vw;
   }
 }
-@media screen and (min-width: 1600px) {
-  .dropdown {
-    padding: 30px 250px;
-  }
-  .textSelect {
-    left: 500px;
-  }
-  .selectTime {
-    height: 350px;
-    padding: 20px 200px;
-  }
-}
-@media screen and (min-width: 2000px) {
-  .containerMain {
-    padding: 0 300px;
-  }
-  .dropdown {
-    padding: 30px 360px;
-  }
-  .dataSelect {
-    padding: 0 360px;
-  }
-  .textSelect {
-    left: 600px;
-  }
-  .selectTime {
-    height: 350px;
-    padding: 20px 200px;
-  }
-}
-@media screen and (min-width: 2500px) {
+@media screen and (max-width: 1500px) {
   header {
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 0vh 10vw;
-    height: 20vh;
-    padding-bottom: 7vh;
+    padding: 1vh 20vw;
   }
   .containerMain {
-    padding: 0 25vw;
-  }
-  .contentHead {
     padding: 0 10vw;
   }
-  .dropdown {
-    padding: 30px 360px;
+}
+@media screen and (max-width: 850px) {
+  header {
+    padding-right: 20px;
+    padding-left: 150px;
+    height: 140px;
   }
-  .dataSelect {
-    padding: 0 400px;
-  }
-  .textSelect {
-    left: 40vw;
-  }
-  .selectTime {
-    height: 350px;
-    padding: 20px 15vw;
-  }
-  .dataReserve > .text {
-    padding-left: 10vw;
-  }
-  .textSelectTime {
-    padding-left: 10vw;
-    color: #0a5491;
+  .department {
+    padding: 10px 20px;
   }
 }
-@media screen and (max-width: 344px) {
-  header {
-    padding: 4vh 1vw;
-    padding-bottom: 10vh;
+@media screen and (max-width: 740px) {
+  .selectDepartment {
+    padding: 10px 140px;
   }
-  .contentHead .logo img {
-    width: 200px;
+  .dropdown p {
+    margin-left: -240px;
+  }
+  .listDepartment > div {
+    flex: 0 1 calc(50% - 10px);
+    max-width: 300px;
+  }
+}
+@media screen and (max-width: 600px) {
+  header {
+    padding-left: 100px;
+  }
+  .containerMain {
+    padding: 0 2vw;
+  }
+}
+@media screen and (max-width: 500px) {
+  header {
+    padding-left: 10px;
+    padding-top: 20px;
+    align-items: start;
+    height: 130px;
+  }
+  .selectDepartment {
+    font-size: 12px;
+    padding: 10px 100px;
+  }
+  .logo {
+    margin-top: -40px;
+  }
+  .date-box {
+    font-size: 1.3em;
+    width: 75px;
+    height: 110px;
+  }
+  .dateNumber {
+    font-size: 1.7rem;
+  }
+  .department {
+    width: 100%;
+    border-radius: 20px;
+  }
+  .listDepartment {
+    gap: 9px;
+  }
+  .listDepartment > div {
+    padding: 10px;
+    font-size: 15px;
+  }
+  .listDepartment > div > svg {
+    width: 30px;
+    height: 30px;
   }
 }
 @media screen and (max-width: 400px) {
-  .date-box {
-    width: 70px;
-    margin: 5px;
-  }
-  .logo img {
-    width: 20px;
-  }
-}
-
-@media screen and (max-height: 911px) {
   header {
-    height: 16vh;
-  }
-}
-@media screen and (max-height: 735px) {
-  header {
-    height: 18vh;
-  }
-}
-@media screen and (min-width: 736px) {
-  .contentButton button {
-    width: 200px;
-    font-size: 17px;
-  }
-}
-@media screen and (min-width:500px) {
-  .data {
-    margin-left: 40px;
-  }
-}
-@media screen and (max-width: 460px) {
-  .contentButton button {
-    width: 130px;
-    font-size: 1.2rem;
-  }
-  .selectTime {
     padding: 0;
-  }
-  .data {
-    line-height: 20px;
-  }
-  .data .hn {
-    font-size: 18px;
-  }
-  .data .name {
-    font-size: 21px;
-  }
-  .logout {
-    font-size: 13px;
+    padding-top: 20px;
+    height: 130px;
   }
   .containerMain {
-    margin-top: -20px;
-  }
-}
-@media screen and (max-width: 365px) {
-  header {
     padding: 0;
-    padding-bottom: 6vh;
+    border-radius: 15px;
   }
-  .contentButton button {
-    width: 90px;
+  .data .hn {
+    font-size: 17px;
+    font-weight: 400;
   }
-  .dataMain h2 {
-    font-size: 2px;
+  .data .name {
+    font-size: 23px;
+    font-weight: 500;
+  }
+  .selectDepartment {
+    font-size: 10px;
+  }
+  .dropdown p {
+    font-size: 12px;
+    margin-left: -180px;
+  }
+  .logo {
+    padding: 50px;
+  }
+  .contenthead .logo img {
+    width: 200px;
+  }
+  .history {
+    font-size: 13px;
+    margin-right: 10px;
+  }
+  .date-box {
+    margin: 2px;
   }
 }

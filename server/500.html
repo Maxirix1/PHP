@@ -1,0 +1,76 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>500 ERROR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    style="
+      background: rgb(0, 75, 143);
+      background: linear-gradient(
+        270deg,
+        rgba(0, 75, 143, 1) 0%,
+        rgba(42, 188, 255, 0.672) 100%
+      );
+    "
+  >
+    <div class="text-[#fff] font-bold text-3xl  rounded-md text-center center justify-center w-auto h-auto m-4 py-40 shadow-2xl md:m-14 md:mx-20 xl:mx-60">
+      <h1>500 | Internal Server Error!</h1>
+      <br>
+      <h2>Please try again.</h2>
+    </div>
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Importing Flatpickr CSS -->
+    <link rel="stylesheet" href=
+"https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Customizing the date picker button image -->
+    <style type="text/css">
+        .flatpickr-calendar {
+            max-height: 28px;
+        }
+
+    </style>
+</head>
+
+<body>
+        <input id="txtdate" 
+               type="text" 
+               class="form-control" 
+               placeholder="Select date">
+
+    <!-- Importing Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- JavaScript to control the date picker -->
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateInput = document.getElementById('txtdate');
+            const calendarIcon = document.getElementById('calendar-icon');
+
+            // Initialize Flatpickr with the input field
+            const datepicker = flatpickr(dateInput, {
+                dateFormat: "d/m/Y", // Set date format
+                allowInput: true, // Allow manual date input
+                onClose: function () {
+                    // Calendar closes automatically when clicked outside
+                }
+            });
+
+            // Open date picker when clicking on the calendar icon
+            calendarIcon.addEventListener('click', function () {
+                datepicker.open();
+            });
+        });
+    </script>
+</body>
+
+</html>
+
