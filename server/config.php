@@ -15,6 +15,6 @@ try {
     // echo"404 ERROR | Connect SUCCESS";
 } catch (PDOException $e) {
     // echo "Connection failed: " . $e->getMessage();
-    header('Location: ./500.html');
+    header('Location: error');
 }
 ?>

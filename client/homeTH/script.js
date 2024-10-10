@@ -106,42 +106,6 @@ $(document).ready(function () {
     });
   }
 
-  // $("#departmentSelect").change(function () {
-  //   var selectedDepartment = $(this).val();
-  //   console.log("Selected Department: " + selectedDepartment);
-  // });
-
-  // function updateDates() {
-  //   updateMonthDisplay();
-  //   updateDateBoxes();
-  // }
-
-  // $("#prevDates").on("click", () => {
-  //   currentIndex -= 4;
-  //   if (currentIndex < 0) {
-  //     currentDate.setMonth(currentDate.getMonth() - 1);
-  //     const daysInPreviousMonth = getDaysInMonth(
-  //       currentDate.getFullYear(),
-  //       currentDate.getMonth()
-  //     );
-  //     currentIndex = daysInPreviousMonth - (daysInPreviousMonth % 4);
-  //   }
-  //   updateDates();
-  // });
-
-  // $("#nextDates").on("click", () => {
-  //   const daysInMonth = getDaysInMonth(
-  //     currentDate.getFullYear(),
-  //     currentDate.getMonth()
-  //   );
-  //   currentIndex += 4;
-  //   if (currentIndex >= daysInMonth) {
-  //     currentDate.setMonth(currentDate.getMonth() + 1);
-  //     currentIndex = 0;
-  //   }
-  //   updateDates();
-  // });
-  // เริ่มแสดงข้อมูล
   updateDates();
 });
 
@@ -180,7 +144,6 @@ function sendTime(slot, button) {
         },
     });
 
-    // Change the button color after sending data
     changeButtonColor(button);
 }
 
@@ -199,26 +162,4 @@ function handleButtonClick(slot, isReserved) {
   }
 }
 
-const openDepartBtn = document.getElementById('openDepartmentBtn');
-const popup = document.getElementById('department');
-const closeBtn = document.querySelector(".close");
-const cancleBtn = document.getElementById('cancle');
-
-openDepartBtn.addEventListener('click', function() {
-    popup.style.display = 'flex';
-});
-
-closeBtn.addEventListener('click' ,function() {
-    popup.style.display = 'none';
-});
-
-cancleBtn.addEventListener('click' ,function() {
-    popup.style.display = 'none';
-});
-
-window.addEventListener('click', function(event) {
-  if (event.target === popup) {
-      popup.style.display = 'none';
-  }
-});
 

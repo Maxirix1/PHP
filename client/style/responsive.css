@@ -31,7 +31,7 @@
   .dropdown p {
     margin-left: -240px;
   }
-  .listDepartment > div {
+  .listDepartment > button {
     flex: 0 1 calc(50% - 10px);
     max-width: 300px;
   }
@@ -73,11 +73,11 @@
   .listDepartment {
     gap: 9px;
   }
-  .listDepartment > div {
+  .listDepartment > button {
     padding: 10px;
-    font-size: 15px;
+    font-size: 14px;
   }
-  .listDepartment > div > svg {
+  .listDepartment > button > svg {
     width: 30px;
     height: 30px;
   }
@@ -112,6 +112,10 @@
   }
   .contenthead .logo img {
     width: 200px;
+  }
+  .listDepartment > button {
+    padding: 10px;
+    font-size: 12px;
   }
   .history {
     font-size: 13px;

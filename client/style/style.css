@@ -441,7 +441,7 @@ select {
   gap: 15px;
   width: 100%;
 }
-.listDepartment > div {
+.departmentItem {
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 3px 4px 8px #75a1c58f;
@@ -454,8 +454,24 @@ select {
   /* min-width: 200px; */
   flex: 1 1 30%;
   max-width: 30%;
+  border: none;
+  font-size: 16px;
+  text-align: center;
+  color: #162e71;
 }
-.listDepartment > div > svg {
+/* .departmentItem:hover {
+  background-color: #125f9e;
+  color: #fff;
+} */
+.clicked {
+  background-color: #024783;
+  color: #ffffff;
+}
+/* .listDepartment > button:hover > svg {
+  background-color: #ffffff;
+} */
+
+.listDepartment > button > svg {
   color: #074478;
   background-color: #a4c2dbc2;
   padding: 6px;
@@ -464,10 +480,6 @@ select {
   fill: #074478;
   height: 40px;
   stroke: #074478;
-}
-.listDepartment > div > span {
-  color: #162e71;
-  text-align: center;
 }
 
 .headDepart {
@@ -512,6 +524,7 @@ select {
   transition: 0.3s;
   background-color: #042c4f;
 }
+
 #cancle {
   background-color: transparent;
   border: 1px solid #162e71;
