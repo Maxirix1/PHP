@@ -1,3 +1,10 @@
+<?php
+if (!isset($_SESSION['hn'])) {
+  header('Location: ../../client/HomeTH');
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

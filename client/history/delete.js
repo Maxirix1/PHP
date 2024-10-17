@@ -12,6 +12,7 @@ function confirmCancel(hn, date, reserve_time, dept) {
     }).then((result) => {
         if (result.isConfirmed) {
             // ส่งคำขอ AJAX เมื่อผู้ใช้ยืนยันการยกเลิก
+
             $.ajax({
                 type: "POST",
                 url: "./delete.php",
@@ -31,7 +32,11 @@ function confirmCancel(hn, date, reserve_time, dept) {
                                 'สำเร็จ!',
                                 'การจองถูกยกเลิกเรียบร้อยแล้ว!',
                                 'success'
-                            );
+                            ).then(() => {
+                                setTimeout(function() {
+                                    location.reload();
+                                });
+                            });
                         } else {
                             Swal.fire(
                                 'ข้อผิดพลาด!',
@@ -63,5 +68,6 @@ function confirmCancel(hn, date, reserve_time, dept) {
                 'info'
             );
         }
+
     });
 }

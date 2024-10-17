@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-/* font-family: "Kanit", sans-serif; */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-/* font-family: "Poppins", sans-serif; */
 * {
   box-sizing: border-box;
   text-decoration: none;
@@ -10,7 +8,9 @@
   list-style: none;
   font-family: "Kanit", sans-serif;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 /* All width: 430 height: 932 */
 header {
   display: flex;
@@ -21,8 +21,8 @@ header {
   background: rgb(0, 75, 143);
   background: linear-gradient(
     270deg,
-    rgba(0, 75, 143, 1) 0%,
-    rgba(42, 189, 255, 1) 100%
+    rgb(5, 86, 162) 0%,
+    rgb(87, 224, 255) 100%
   );
   color: #fff;
   height: 160px;
@@ -58,6 +58,8 @@ header .dataMain h2 {
 .data .hn {
   font-size: 20px;
   font-weight: 500;
+  text-align: start;
+  align-items: center;
 }
 .data .dropdown {
   font-size: 10px;
@@ -132,23 +134,6 @@ header .dataMain h2 {
   border-radius: 10px;
   background-color: #fff;
   cursor: pointer;
-}
-select {
-  width: 100%;
-  height: 50px;
-  border: 1px solid #0a5491;
-  border-radius: 10px;
-  font-size: 1.5rem;
-  text-align: center;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #156db5;
-}
-.department option {
-  padding: 20px;
-  z-index: -1;
 }
 .selectTime {
   padding: 8px 25px;
@@ -243,13 +228,14 @@ select {
   color: #fff;
   font-size: 1.5rem;
 }
-.submit {
+.submitBtn {
   display: flex;
   align-items: center;
   justify-content: center;
   padding-bottom: 20px;
+  margin-top: 40px;
 }
-.submit button {
+.submit{
   border: none;
   background-color: #0367bf;
   color: #fff;
@@ -330,12 +316,23 @@ select {
 .dataMonthHead {
   display: flex;
   align-items: center;
+  text-align: center;
   justify-content: center;
   width: 100%;
 }
+.dataMonthHead > button {
+  background-color: #fff;
+  border: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  cursor: pointer;
+}
 .dataMonthHead p {
   width: auto;
-  margin: 0 30px;
 }
 .dataMonthHead img {
   width: 45px;
@@ -351,7 +348,7 @@ select {
   margin-top: 20px;
 }
 
-.contentButton button {
+.contentButton > button {
   background-color: #c0c0c0;
   width: 130px;
   border: none;
@@ -366,6 +363,7 @@ select {
   text-align: center;
   cursor: pointer;
 }
+
 
 .contentButton button:hover {
   background-color: #0a8b0e;
@@ -459,17 +457,11 @@ select {
   text-align: center;
   color: #162e71;
 }
-/* .departmentItem:hover {
-  background-color: #125f9e;
-  color: #fff;
-} */
+
 .clicked {
   background-color: #024783;
   color: #ffffff;
 }
-/* .listDepartment > button:hover > svg {
-  background-color: #ffffff;
-} */
 
 .listDepartment > button > svg {
   color: #074478;
@@ -481,7 +473,6 @@ select {
   height: 40px;
   stroke: #074478;
 }
-
 .headDepart {
   display: flex;
   align-items: center;
@@ -511,7 +502,7 @@ select {
   display: flex;
   gap: 10px;
 }
-.listSubmit button {
+.listSubmit > button {
   border: none;
   background-color: #024783;
   color: #fff;
@@ -520,7 +511,7 @@ select {
   border-radius: 5px;
   transition: 0.3s;
 }
-.listSubmit button:hover {
+.listSubmit > button:hover {
   transition: 0.3s;
   background-color: #042c4f;
 }
@@ -535,4 +526,149 @@ select {
   color: #fff;
   transition: 0.3s;
   border-color: #fff;
+}
+#calendar {
+  display: none;
+}
+.beforeContent, .afterContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+.beforeContent > button, .afterContent > button {
+  color: #024783;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+.beforeNoon, .afterNoon {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  margin-bottom: 20px;
+  height: 70px;
+  gap: 6px;
+  /* white-space: nowrap; */
+  justify-content: center;
+  width: 100%;
+  /* flex-wrap: wrap; */
+}
+.beforeNoon > button , .afterNoon > button {
+  border: none;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px 5px;
+  width: 120px;
+  font-size: 1rem;
+  /* white-space: nowrap; */
+  font-weight: 500;
+  color:#0a5491;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px #4496de7e;
+}
+.textTime {
+  color: #0a5491;
+  font-weight: 400;
+  font-size: 16px;
+}
+.timeSelect {
+  padding: 0 10px;
+}
+.beforeNoon::-webkit-scrollbar, .afterNoon::-webkit-scrollbar {
+  display: none;
+}
+
+.clickedBtn {
+  background-color: #024783;
+  color: #ffffff;
+}
+
+.custom-swal-icon .swal2-warning {
+  color: #024783;
+}
+#noDisplay {
+  cursor: no-drop;
+}
+
+/* -------------------------Calendar---------------------------------- */
+
+.datepicker {
+  position: relative;
+  width: 320px;
+}
+
+.containerCalendar {
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  flex-direction: column;
+}
+
+.calendar {
+  display: none; /* เริ่มต้นให้ปิดปฏิทิน */
+  position: fixed;
+  width: 840px;
+  /* margin: auto; */
+  height: auto;
+  top: 80px;
+  left: 50%;
+  transform: translate(-50%, 0);  
+  background: white;
+  border: none;
+  padding: 25px 0;
+  padding-top: 0;
+  border-radius: 10px;
+  box-shadow: 8px 10px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #062075;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.calendar-header button {
+  font-size: 18px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+}
+
+.calendar table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.calendar th,
+.calendar td {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: #062075;
+}
+
+.calendar th {
+  background: #f0f0f0;
+}
+
+.calendar td:hover {
+  background: #e0e0e0;
+  border-radius: 5px;
+}
+
+.calendar .disabled {
+  color: #ccc;
+  pointer-events: none;
 }

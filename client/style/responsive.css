@@ -14,6 +14,39 @@
     padding: 0 10vw;
   }
 }
+@media screen and (max-width: 2203px) {
+  .beforeNoon,
+  .afterNoon {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    padding: 13px 5px;
+    white-space: nowrap;
+    width: 1000px;
+    justify-content: start;
+  }
+  .timeSelect {
+    padding: 0;
+  }
+}
+@media screen and (max-width: 1303px) {
+  .beforeNoon,
+  .afterNoon {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    padding: 13px 5px;
+    white-space: nowrap;
+    width: 1000px;
+    justify-content: start;
+  }
+  .timeSelect {
+    padding: 0;
+  }
+}
+@media screen and (max-width: 940px) {
+  .calendar {
+    width: 600px;
+  }
+}
 @media screen and (max-width: 850px) {
   header {
     padding-right: 20px;
@@ -35,6 +68,22 @@
     flex: 0 1 calc(50% - 10px);
     max-width: 300px;
   }
+  .calendar {
+    width: 530px;
+  }
+}
+@media screen and (max-width: 630px) {
+  .data .hn {
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .data .name {
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .calendar {
+    width: 400px;
+  }
 }
 @media screen and (max-width: 600px) {
   header {
@@ -42,6 +91,30 @@
   }
   .containerMain {
     padding: 0 2vw;
+  }
+  tr {
+    color:#092551;
+    font-weight: 500;
+  }
+  td {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 580px) {
+  header {
+    padding-left: 10px;
+    padding-top: 20px;
+    align-items: start;
+    height: 130px;
+  }
+
+  .data .hn {
+    font-size: 17px;
+    font-weight: 400;
+  }
+  .data .name {
+    font-size: 20px;
+    font-weight: 600;
   }
 }
 @media screen and (max-width: 500px) {
@@ -81,6 +154,25 @@
     width: 30px;
     height: 30px;
   }
+  .data .hn {
+    font-size: 17px;
+    font-weight: 400;
+  }
+  .data .name {
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+@media screen and (max-width: 430px) {
+  .selectDepartment {
+    padding: 10px 0;
+    width: 100%;
+  }
+  .calendar th,
+  .calendar td {
+    font-size: 15px;
+    padding: 10px 5px;
+  }
 }
 @media screen and (max-width: 400px) {
   header {
@@ -97,8 +189,8 @@
     font-weight: 400;
   }
   .data .name {
-    font-size: 23px;
-    font-weight: 500;
+    font-size: 17px;
+    font-weight: 600;
   }
   .selectDepartment {
     font-size: 10px;
@@ -123,5 +215,22 @@
   }
   .date-box {
     margin: 2px;
+  }
+  .calendar th,
+  .calendar td {
+    font-size: 15px;
+    padding: 10px 5px;
+  }
+  .calendar {
+    width: 360px;
+  }
+}
+
+/* ---------------------------height----------------------------- */
+
+@media screen and (max-height: 760px) {
+  .department {
+    margin-top: 20px;
+    overflow: auto;
   }
 }

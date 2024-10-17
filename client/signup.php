@@ -1,5 +1,9 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,11 +14,10 @@ session_start();
     <title>สมัครสมาชิก | AZTEC</title>
     <link rel="icon" type="image/x-icon" href="./assets/logoHead.png">
     <link rel="stylesheet" href="./style/signup.css">
-    <link rel="stylesheet" href=
-"https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
 </head>
 
 <body>
@@ -65,7 +68,7 @@ session_start();
                             <!-- -------------HN------------- -->
                             <input type="number" id="hn" name="hn" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                placeholder="เลขประจำตัวผู้ป่วย">
+                                placeholder="เลขบัตรประชาชน">
                         </div>
                     </div>
 
@@ -84,9 +87,51 @@ session_start();
                             </span>
 
                             <!-- ------------------Birth Date------------- -->
-                            <input class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                       type="text" id="dob" name="birthDate"
-                       placeholder="วัน เดือน ปี เกิด">
+                            <input
+                                class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                                readonly type="text" id="dob" name="birthDate" placeholder="วัน เดือน ปี เกิด">
+
+                            <!-- <input type="text" id="dob" placeholder="เลือกวัน" readonly> -->
+
+                            <div class="containerCalendar">
+                                <div class="calendar" id="calendar">
+                                    <div class="calendar-header">
+                                        <a id="prevMonth">
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                                viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7" />
+                                            </svg>
+                                        </a>
+                                        <select id="monthSelect"></select>
+                                        <select id="yearSelect"></select>
+                                        <a id="nextMonth">
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                                viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>อา</th>
+                                                <th>จ</th>
+                                                <th>อ</th>
+                                                <th>พ</th>
+                                                <th>พฤ</th>
+                                                <th>ศ</th>
+                                                <th>ส</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="days"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
 
 
                         </div>
@@ -105,7 +150,7 @@ session_start();
                             <!-- ----------------Phone Number------------ -->
                             <input type="number" id="phoneNumber" name="phoneNumber" required
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                placeholder="เบอร์โทร">
+                                placeholder="เบอร์โทรติดต่อ">
                         </div>
                     </div>
                     <div class="relative flex items-center w-full">
@@ -195,102 +240,150 @@ session_start();
                         </div>
                     </div>
 
-                    <label class="block text-sm my-4 font-semibold text-white">ตั้งรหัสผ่าน</label>
 
-                    <div class="flex-col gap-2 sm:flex flex-row md:flex flex-row">
-                        <div class="w-full">
-                            <div class="relative">
-                                <input id="password" type="password" name="password" required
-                                    class="py-3 px-6 pr-0 pe-10 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    placeholder="กำหนดรหัสผ่าน">
-                                <button type="button" onclick="togglePasswordVisibility()"
-                                    class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600">
-                                    <svg class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24">
-                                        </path>
-                                        <path class="hs-password-active:hidden"
-                                            d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68">
-                                        </path>
-                                        <path class="hs-password-active:hidden"
-                                            d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61">
-                                        </path>
-                                        <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"></line>
-                                        <path class="hidden hs-password-active:block"
-                                            d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                                        <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="w-full mt-2 sm:mt-0">
-                            <div class="relative">
-                                <input id="password" type="password" name="confirmPassword" required
-                                    class="py-3 px-6 pr-0 pe-10 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                    placeholder="ยืนยันรหัสผ่าน">
-                                <button type="button" onclick="togglePasswordVisibility()"
-                                    class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600">
-                                    <svg class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24">
-                                        </path>
-                                        <path class="hs-password-active:hidden"
-                                            d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68">
-                                        </path>
-                                        <path class="hs-password-active:hidden"
-                                            d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61">
-                                        </path>
-                                        <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"></line>
-                                        <path class="hidden hs-password-active:block"
-                                            d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                                        <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                
 
-                    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+                    <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
+                    <!-- <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script> -->
+
 
                     <!-- JavaScript to control the date picker functionality -->
                     <script type="text/javascript">
-                        // Initialize Flatpickr for the input field
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const dobField = document.getElementById('dob');
-                            const calendarIcon = document.getElementById('calendar-icon');
+                        const thaiMonths = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+                        const dateInput = document.getElementById('dob');
+                        const calendar = document.getElementById('calendar');
+                        const monthSelect = document.getElementById('monthSelect');
+                        const yearSelect = document.getElementById('yearSelect');
+                        const days = document.getElementById('days');
+                        const prevMonthBtn = document.getElementById('prevMonth');
+                        const nextMonthBtn = document.getElementById('nextMonth');
 
-                            // Initialize Flatpickr with options
-                            const datepicker = flatpickr(dobField, {
-                                dateFormat: "d/m/Y",  // Date format
-                                position: "auto bottom",  // Calendar position
-                                allowInput: true,  // Allow manual input
-                                onClose: function () {
-                                    // Calendar closes when clicked outside
+                        let currentDate = new Date();
+                        let displayDate = new Date(currentDate);
+                        let maxDate = new Date();
+                        maxDate.setDate(maxDate.getDate() + 0);
+
+                        // สร้างรายการเดือนและปีให้ผู้ใช้เลือก
+                        function populateMonthYearSelectors() {
+                            // เติมข้อมูลใน monthSelect
+                            thaiMonths.forEach((month, index) => {
+                                const option = document.createElement('option');
+                                option.value = index;
+                                option.textContent = month;
+                                monthSelect.appendChild(option);
+                            });
+
+                            // เติมข้อมูลใน yearSelect (ตั้งค่าให้เลือกปีปัจจุบันย้อนหลังหรืออนาคต 10 ปี)
+                            const currentYear = currentDate.getFullYear();
+                            for (let i = currentYear - 80; i <= currentYear + 0; i++) {
+                                const option = document.createElement('option');
+                                option.value = i;
+                                option.textContent = i + 543;
+                                yearSelect.appendChild(option);
+                            }
+
+                            // ตั้งค่าเริ่มต้นของ monthSelect และ yearSelect
+                            monthSelect.value = displayDate.getMonth();
+                            yearSelect.value = displayDate.getFullYear();
+                        }
+
+                        // อัปเดตการแสดงปฏิทิน
+                        function renderCalendar() {
+                            const year = displayDate.getFullYear();
+                            const month = displayDate.getMonth();
+
+                            const firstDay = new Date(year, month, 1);
+                            const lastDay = new Date(year, month + 1, 0);
+                            const startDay = firstDay.getDay();
+                            const totalDays = lastDay.getDate();
+
+                            days.innerHTML = '';
+
+                            let html = '<tr>';
+                            for (let i = 0; i < startDay; i++) {
+                                html += '<td></td>';
+                            }
+
+                            for (let day = 1; day <= totalDays; day++) {
+                                const dayDate = new Date(year, month, day);
+                                // html += `<td data-date="${dayDate}">${day}</td>`;
+                                const isDisabled = dayDate > maxDate;  // Disable dates after maxDate
+                                html += `<td class="${isDisabled ? 'disabled' : ''}" data-date="${isDisabled ? '' : dayDate}">${day}</td>`;
+
+                                if ((day + startDay) % 7 === 0) {
+                                    html += '</tr><tr>';
                                 }
-                            });
+                            }
+                            html += '</tr>';
+                            days.innerHTML = html;
 
-                            // Open the date picker when the calendar icon is clicked
-                            calendarIcon.addEventListener('click', function () {
-                                datepicker.open();
-                            });
+                            monthSelect.value = displayDate.getMonth();
+                            yearSelect.value = displayDate.getFullYear();
+                        }
+
+                        // แสดงปฏิทินเมื่อคลิก input
+                        dateInput.addEventListener('focus', () => {
+                            calendar.style.display = 'block';
+                            renderCalendar();
                         });
+
+                        // เลือกวันที่
+                        days.addEventListener('click', (e) => {
+                            if (e.target.dataset.date) {
+                                const selectedDate = new Date(e.target.dataset.date);
+                                if (selectedDate <= maxDate) {
+                                    dateInput.value = `${selectedDate.getDate().toString().padStart(2, '0')}/${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}/${selectedDate.getFullYear() + 543}`;
+                                    calendar.style.display = 'none';
+                                }
+                            }
+                        });
+                        nextMonthBtn.addEventListener('click', () => {
+                            const currentMonth = currentDate.getMonth();
+                            const currentYear = currentDate.getFullYear();
+
+                            if (displayDate.getFullYear() === currentYear && displayDate.getMonth() === currentMonth) {
+                                // ถ้าเป็นเดือนและปีปัจจุบัน ไม่ให้เลื่อน
+                                return;
+                            }
+
+                            displayDate.setMonth(displayDate.getMonth() + 1);
+                            renderCalendar();
+                        });
+
+                        // เลื่อนเดือนก่อนหน้า
+                        prevMonthBtn.addEventListener('click', () => {
+                            displayDate.setMonth(displayDate.getMonth() - 1);
+                            renderCalendar();
+                        });
+
+                        // อัปเดตเมื่อผู้ใช้เปลี่ยนเดือน
+                        monthSelect.addEventListener('change', (e) => {
+                            displayDate.setMonth(e.target.value);
+                            renderCalendar();
+                        });
+
+                        // อัปเดตเมื่อผู้ใช้เปลี่ยนปี
+                        yearSelect.addEventListener('change', (e) => {
+                            displayDate.setFullYear(e.target.value);
+                            renderCalendar();
+                        });
+
+                        // ฟังก์ชันเริ่มต้น
+                        populateMonthYearSelectors();
+                        renderCalendar();
+
                     </script>
                     <script>
                         function togglePasswordVisibility() {
                             var passwordField = document.getElementById("password");
-                            var eyeShow = document.getElementById("eye-show");
-                            var eyeHide = document.getElementById("eye-hide");
+                            // var eyeHide = document.getElementById("eye-hide");
 
                             if (passwordField.type === "password") {
                                 passwordField.type = "text";
-                                eyeShow.classList.remove("hidden");
-                                eyeHide.classList.add("hidden");
+                                // eyeHide.classList.add("hidden");
                             } else {
                                 passwordField.type = "password";
-                                eyeShow.classList.add("hidden");
-                                eyeHide.classList.remove("hidden");
+                                // eyeHide.classList.remove("hidden");
                             }
                         }
                     </script>
@@ -298,7 +391,9 @@ session_start();
 
                     <!-- <p class="text-white">Email :</p> -->
                     <button type="submit" name="signupSubmit" id="submit"
-                        class="mt-4 text-white bg-[#05356b] hover:bg-[#041b36] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2focus:outline-none">ยืนยัน</button>
+                        class="mt-4 text-white bg-[#05356b] hover:bg-[#041b36] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2focus:outline-none">
+                        ลงทะเบียนผู้ป่วยใหม่
+                    </button>
                     <p class="text-[#e8e6e6] font-light mt-2 mb-8 text-center">คุณมีบัญชีแล้วใช่หรือไม่ ? <a
                             href="login.php" class="text-[#fff] font-semibold underline">เข้าสู่ระบบ </a>ตอนนี้!</p>
                 </form>

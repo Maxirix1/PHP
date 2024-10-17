@@ -47,7 +47,7 @@ session_start();
 
                             <input type="text" id="hn" name="hn"
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                placeholder="เลขประจำตัวผู้ป่วย (HN)">
+                                placeholder="เลขบัตรประชาชน">
                         </div>
 
 
@@ -65,7 +65,7 @@ session_start();
 
                             <input id="password" type="password" name="password"
                                 class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 pr-0 md:px-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                placeholder="รหัสผ่าน">
+                                placeholder="รหัสผ่าน (เบอร์โทรศัพท์)">
                             <button type="button" onclick="togglePasswordVisibility()"
                                 class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600">
                                 <svg class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none"

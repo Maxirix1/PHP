@@ -13,21 +13,23 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     $motherName = $_POST['motherName'];
     $urgentName = $_POST['urgentName'];
     $urgentNumber = $_POST['urgentNumber'];
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
+    $password = $_POST['phoneNumber'];
+    // $confirmPassword = $_POST['confirmPassword'];
 
-    if ($password != $confirmPassword) {
-        $_SESSION['error'] = 'รหัสผ่านไม่ตรงกัน!';
+    if (empty($userHn) || strlen($userHn) !== 13) {
+        $_SESSION['error'] = 'เลขประจำตัวผู้ป่วยต้องมี 13 หลัก';
         header('Location: ../client/signup.php');
         exit();
     }
-
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $stmt = $conn->prepare('SELECT * FROM users_signup WHERE userHn = :userHn OR userName = :userName');
     $stmt->execute(['userHn' => $userHn, 'userName' => $username]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    if (!$stmt->execute()) {
+        print_r($stmt->errorInfo());
+    }
+    
     if ($user) {
         $_SESSION['error'] = 'มีผู้ใช้นี้ในระบบแล้ว';
         header('Location: ../client/signup.php');
@@ -45,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         "motherName" => $motherName,
         "urgentName" => $urgentName,
         "urgentNumber" => $urgentNumber,
-        "password" => $hashedPassword
+        "password" => $password
     ]);
 
     if ($result) {

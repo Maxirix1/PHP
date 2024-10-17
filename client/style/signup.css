@@ -65,3 +65,134 @@ img {
     width: 50vw;
   }
 } */
+
+
+.containerCalendar {
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  flex-direction: column;
+}
+
+.calendar {
+  display: none; /* เริ่มต้นให้ปิดปฏิทิน */
+  position: fixed;
+  width: 750px;
+  /* margin: auto; */
+  height: auto;
+  top: 80px;
+  left: 50%;
+  transform: translate(-50%, 0);  
+  background: white;
+  border: none;
+  padding: 25px 0;
+  padding-top: 0;
+  border-radius: 10px;
+  box-shadow: 8px 10px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  background-color: #193261;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+select {
+  background-color: transparent;
+  width: 150px;
+  text-align: center;
+}
+#monthSelect::after {
+  content: '\25BC';
+}
+#monthSelect {
+  width: 200px;
+  outline: none;
+  border: none;
+}
+ select::-webkit-scrollbar {
+  display: none;
+}
+option {
+  color: #193261;
+  padding: 5px 10px;
+  border: none;
+}
+#monthYear {
+  font-size: 25px;
+  font-weight: 500;
+}
+.calendar-header a {
+  font-size: 30px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 500;
+}
+
+.calendar table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.calendar th,
+.calendar td {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: #062075;
+}
+
+.calendar th {
+  background: #f0f0f0;
+}
+
+.calendar td:hover {
+  background: #e0e0e0;
+  border-radius: 5px;
+}
+
+.calendar .disabled {
+  color: #ccc;
+  pointer-events: none;
+}
+@media screen and (max-width: 940px) {
+  .calendar {
+    width: 600px;
+  }
+}
+@media screen and (max-width: 740px) {
+  .calendar {
+    width: 530px;
+  }
+}
+@media screen and (max-width: 630px) {
+  .calendar {
+    width: 400px;
+  }
+}
+@media screen and (max-width: 430px) {
+  .calendar th,
+  .calendar td {
+    font-size: 15px;
+    padding: 10px 5px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .calendar th,
+  .calendar td {
+    font-size: 15px;
+    padding: 10px 5px;
+  }
+  .calendar {
+    width: 360px;
+  }
+}
