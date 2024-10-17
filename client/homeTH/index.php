@@ -543,11 +543,24 @@ try {
                                         }, 1000); // รอ 1 วินาทีก่อนรีเฟรชหน้า
                                     });
                                 },
-                                error: function (error) {
-                                    console.error('Error', error);
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.error('Error', jqXHR);
+                                    let errorMessage = 'คุณมีการจองแผนกนี้แล้ว ไม่สามารถจองได้!'; // ข้อความเริ่มต้น
+
+                                    // ตรวจสอบว่า responseText มีค่าหรือไม่ และแปลงเป็น JSON
+                                    if (jqXHR.responseText) {
+                                        try {
+                                            const response = JSON.parse(jqXHR.responseText);
+                                            if (response.error) {
+                                                errorMessage = response.error; // ดึงข้อความ error จาก PHP
+                                            }
+                                        } catch (e) {
+                                            console.error('Error parsing response', e);
+                                        }
+                                    }
                                     Swal.fire({
                                         title: 'จองไม่สำเร็จ!',
-                                        text: 'โปรดลองใหม่อีกครั้ง หรือติดต่อเจ้าหน้าที่',
+                                        text: errorMessage,
                                         icon: 'error',
                                     }).then(() => {
                                         setTimeout(function () {

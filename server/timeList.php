@@ -6,6 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $date = $_SESSION['date'];
+$hn = $_SESSION['hn'];
 
 
 

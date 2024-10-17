@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!$_SESSION['hn']) {
+if (!$_SESSION['hn']) {
     header('Location: ../../client/login.php');
 }
 
@@ -33,16 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $sqlQueue = 'SELECT MAX(queue_no) AS maxQueue FROM reserve_time WHERE date = :date';
         $stmtQueue = $conn->prepare($sqlQueue);
-        $stmtQueue->execute(['date'=> $date]);
+        $stmtQueue->execute(['date' => $date]);
         $queue = $stmtQueue->fetch(PDO::FETCH_ASSOC);
-        
+
         $queueNo = $queue['maxQueue'];
 
-        if($queueNo) {
+        if ($queueNo) {
 
             $maxQueueNum = intval(substr($queueNo, 1));
             $newQueue = $maxQueueNum + 1;
-        }else {
+        } else {
             $newQueue = 1;
         }
 
@@ -157,20 +157,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //     echo $slot . "<br>"; // แสดงช่วงเวลาแต่ละช่วง
         // }
 
-            $sql = "INSERT INTO reserve_time (date, hn, dept, reserve_time, queue_no) VALUES (:selectedDate, :hn, :department, :selectedTime, :queue_no)"; // แก้ไขชื่อ table และ column ให้ตรงกับฐานข้อมูลของคุณ
+        $sql_check = 'SELECT COUNT(*) AS count FROM reserve_time WHERE date = :date AND hn = :hn AND dept = :department';
+        $stmt_check = $conn->prepare($sql_check);
+        $stmt_check->bindParam(':date', $date);
+        $stmt_check->bindParam(':hn', $hn);
+        $stmt_check->bindParam(':department', $department);
+        $stmt_check->execute();
+        $reserveCount = $stmt_check->fetch(PDO::FETCH_ASSOC)['count'];
 
-            try {
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':selectedDate', $date);
-                $stmt->bindParam(':hn', $hn);
-                $stmt->bindParam(':department', $department);
-                $stmt->bindParam(':selectedTime', $nextSlot);
-                $stmt->bindParam(':queue_no', $newQueueNumber);
-                $stmt->execute();
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
-                exit; // หยุดการทำงานหากเกิดข้อผิดพลาด
-            }
+        if ($reserveCount > 0) {
+            echo json_encode(['error' => 'คุณได้ทำการจองในแผนกนี้แล้วในวันนี้']);
+            http_response_code(400); // กำหนดรหัสสถานะ HTTP เป็น 400 เพื่อบอกว่าเกิดข้อผิดพลาด
+            exit; // หยุดการทำงานหากมีการจองซ้ำ
+        }
+
+
+        $sql = "INSERT INTO reserve_time (date, hn, dept, reserve_time, queue_no) VALUES (:selectedDate, :hn, :department, :selectedTime, :queue_no)"; // แก้ไขชื่อ table และ column ให้ตรงกับฐานข้อมูลของคุณ
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':selectedDate', $date);
+            $stmt->bindParam(':hn', $hn);
+            $stmt->bindParam(':department', $department);
+            $stmt->bindParam(':selectedTime', $nextSlot);
+            $stmt->bindParam(':queue_no', $newQueueNumber);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            exit; // หยุดการทำงานหากเกิดข้อผิดพลาด
+        }
 
 
         echo "บันทึกเวลาสำเร็จ";
