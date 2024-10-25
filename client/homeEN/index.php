@@ -1,6 +1,7 @@
 <?php
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 session_start();
-
 // session_start();
 
 if (!isset($_SESSION['hn'])) {
@@ -56,8 +57,8 @@ try {
     <header>
         <div class="dataMain">
             <div class="data">
-                <h3 class="name"><?= htmlspecialchars($_SESSION['username']) ?></h3>
-                <h3 class="hn">HN <?= htmlspecialchars($_SESSION['hn']) ?></h3>
+                <h3 class="name">Hi, <?= htmlspecialchars($_SESSION['username']) ?></h3>
+                <h3 class="hn"><?= htmlspecialchars($_SESSION['hn']) ?></h3>
             </div>
             <!-- <h2>คุณ </h2>  -->
 
@@ -102,13 +103,13 @@ try {
             <div class="logo">
                 <img src="../assets/logoSmall.png" alt="Logo">
             </div>
-            <h1 class="textHead">Reserve</h1>
+            <h1 class="textHead">RESERVE</h1>
         </div>
         <div class="dropdown">
-            <p>Department</p>
+            <p>Select department</p>
 
             <button class="selectDepartment" id="openDepartmentBtn">
-                <h1 id="beforeSelected">Select Department</h1>
+                <h1 id="beforeSelected">Select department</h1>
                 <h1 id="departmentDisplay"></h1>
             </button>
         </div>
@@ -116,7 +117,7 @@ try {
         <section class="containerDepartment" id="department">
             <div class="department">
                 <div class="headDepart">
-                    <p>Select Department</p>
+                    <p>Select department</p>
                     <span class="close">&times;</span>
                 </div>
                 <div class="contentList">
@@ -136,7 +137,7 @@ try {
 
                 <div class="listSubmit">
                     <button id="exit">OK</button>
-                    <button id="cancle">Cancle</button>
+                    <button id="cancle">Cancel</button>
                 </div>
 
             </div>
@@ -154,8 +155,48 @@ try {
                         <p id="beforeSelectDate">Select Date</p>
                         <p id="dateDisplay"></p>
                     </button>
-                    <input type="text" id="calendar" autocomplete="off" readonly />
+                    <!-- <input type="text" id="calendar" autocomplete="off" readonly /> -->
 
+                </div>
+
+                <div class="containerCalendar">
+                    <div class="calendar" id="calendar">
+                        <div class="calendar-header">
+                            <button id="prevMonth">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m15 19-7-7 7-7" />
+                                </svg>
+
+                            </button>
+                            <span id="monthYear"></span>
+                            <button id="nextMonth">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m9 5 7 7-7 7" />
+                                </svg>
+
+                            </button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>S</th>
+                                    <th>M</th>
+                                    <th>T</th>
+                                    <th>W</th>
+                                    <th>TH</th>
+                                    <th>F</th>
+                                    <th>Sa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="days"></tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>
@@ -166,7 +207,7 @@ try {
 
             <div class="headText">
                 <h2 class="text" style="padding:8px 25px;">Select Time</h2>
-                <a href="../history" class="history">Booking History</a>
+                <a href="../history" class="history">Booking history</a>
             </div>
             <div class="timeSelect">
 
@@ -250,162 +291,157 @@ try {
 
         <!-- <script src="script.js"></script> -->
 
-        <script src="./popup.js"></script>
+        <script src="../homeTH/popup.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const Field = document.getElementById('calendar');
-                const dateDisplay = document.getElementById('dateDisplay');
-                const beforeDate = document.getElementById('beforeSelectDate');
-
-                const datepicker = flatpickr(Field, {
-                    locale: "th",
-                    minDate: "today",
-                    dateFormat: "dmY",
-                    position: "auto bottom",
-                    allowInput: true,
-                    disableMobile: "true",
-                    onChange: function (selectedDates, dateStr, instance) {
-                        selectedDate = dateStr;
-                        const thaiDate = convertToThaiDate(selectedDates[0]);
-
-                        $.ajax({
-                            type: "POST",
-                            url: "../../server/timeList.php",
-                            data: {
-                                date: selectedDate
-                            },
-                            success: function (response) {
-                                console.log(response);
-                                const outputs = response.split('|||');
-                                const before = outputs[0];
-                                const after = outputs[1];
-
-
-                                document.querySelector('#beforeNoon').innerHTML = before;
-                                document.querySelector('#afterNoon').innerHTML = after;
-
-
-                                const buttons = document.querySelectorAll('.Btn');
-                                buttons.forEach(button => {
-                                    button.addEventListener('click', function () {
-                                        // รีเซ็ตสีของทุกปุ่มให้เป็นค่าเดิม
-                                        buttons.forEach(btn => {
-                                            btn.style.backgroundColor = '';
-                                            btn.style.color = '';
-                                        });
-
-                                        // เปลี่ยนสีของปุ่มที่ถูกคลิก
-                                        button.style.backgroundColor = '#00CCA7';
-                                        button.style.color = 'white';
-
-                                        selectedTime = button.textContent;
-                                        department = document.getElementById('departmentDisplay').textContent;
-
-                                        console.log("Selected time: " + selectedTime);
-                                    });
-                                });
-                            },
-                            error: function (error, xhr, status) {
-                                console.error("Error:", error);
-                            }
-                        });
-
-                        dateDisplay.textContent = thaiDate;
-                        beforeDate.style.display = 'none';
-                    },
-                    onOpen: function (selectedDates, dateStr, instance) {
-                        const year = new Date().getFullYear() + 543;
-                        instance.currentYear = year;
-                        instance.jumpToDate(new Date(year, instance.currentMonth, 1));
-                    },
-                    onClose: function () { }
-                });
-
-                function convertToThaiDate(date) {
-                    const monthsThai = [
-                        "January", "Fabruary", "March", "April", "May", "June",
-                        "July", "August", "September", "October", "November", "December"
-                    ];
-                    const day = date.getDate();
-                    const month = monthsThai[date.getMonth()];
-                    const year = date.getFullYear();
-
-                    return `${day} ${month} ${year}`;
-                }
 
                 document.getElementById('submit').addEventListener('click', function () {
-                    thaiDate = dateDisplay.textContent
+
+                    const dateObject = new Date(selectedDate);
+
+                    function formatDateToSQL(date) {
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        return `${year}-${month}-${day}`;
+                    }
+
+                    const formattedDate = formatDateToSQL(dateObject);
+                    console.log(formattedDate);
+
+                    const dateDisplayElement = document.getElementById('dateDisplay');
+                    const departmentElement = document.getElementById('departmentDisplay');
+
+                    const thaiDate = dateDisplayElement ? dateDisplayElement.textContent : '';
+                    const department = departmentElement ? departmentElement.textContent : '';
 
                     if (!department) {
                         Swal.fire({
-                            title: 'Select complete information!',
+                            title: 'Select complete information',
                             text: 'Please select department',
                             icon: 'warning',
                             confirmButtonText: 'OK'
                         });
-                        // return;
+                        return;
                     }
 
+                    console.log(selectedDate);
+
                     Swal.fire({
-                        title: 'ยืนยันการจอง',
-                        html: ` <div style=" color: #162e71; display: flex; align-items:start; justify-content:start; flex-direction:column;">
-                                <p>Date:<h4>${thaiDate}</h4></p>
-                                <br>
-                                <p>Department:<h4>${department}</h4></p>
-                                <br>
-                                <p>Range Time:<h4>${selectedTime}</h4></p>
-                            </div>`,
-                        icon: 'warning',
+                        title: 'Reason for appointment',
+                        input: 'text',
+                        inputLabel: 'Reason',
+                        inputPlaceholder: 'Enter reason',
                         showCancelButton: true,
-                        confirmButtonText: 'Submit',
-                        cancelButtonText: 'Cancle',
-                        customClass: {
-                            icon: 'custom-swal-icon' // ใช้ custom class สำหรับไอคอน
+                        confirmButtonText: 'OK',
+                        cancelButtonText: 'Cancel',
+                        preConfirm: (value) => {
+                            if (!value) {
+                                Swal.showValidationMessage('Please fill in the reason for the appointment.');
+                            }
+                            return value;
                         }
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            $.ajax({
-                                type: 'POST',
-                                url: '../../server/success/index.php',
-                                data: {
-                                    time: selectedTime,
-                                    date: selectedDate,
-                                    department: departmentDisplay.textContent
-                                },
-                                success: function (response) {
-                                    // console.log(response);
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        icon: 'success',
-                                    }).then(() => {
-                                        setTimeout(function () {
-                                            location.reload();
-                                        });
-                                    });
-                                },
-                                error: function (error, xhr, status) {
-                                    console.error('Error', error);
+                            const reason = result.value;
+
+                            Swal.fire({
+                                title: 'Confirm booking',
+                                html: `<div style="color: #162e71; display: flex; align-items:start; justify-content:start; flex-direction:column;">
+                    <p>Date :<h4>${thaiDate}</h4></p>
+                    <br>
+                    <p>Department :<h4>${department}</h4></p>
+                    <br>
+                    <p>Time :<h4>${selectedTime}</h4></p>
+                    <br>
+                    <p>Reason :<h4>${reason}</h4></p>
+                </div>`,
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'OK',
+                                cancelButtonText: 'Cancel',
+                                customClass: {
+                                    icon: 'custom-swal-icon'
                                 }
-                            })
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '../../server/success/index.php',
+                                        data: {
+                                            time: selectedTime,
+                                            date: selectedDate,
+                                            department: department,
+                                            reason: reason
+                                        },
+                                        success: function (response) {
+                                            let timerInterval;
+                                            Swal.fire({
+                                                title: "Loading...",
+                                                timer: 2000,
+                                                timerProgressBar: true,
+                                                customClass: {
+                                                    confirmButton: 'hide-button',
+                                                    cancelButton: 'hide-button'
+                                                },
+                                                willClose: () => {
+                                                    clearInterval(timerInterval);
+                                                }
+                                            }).then((result) => {
+                                                Swal.fire({
+                                                    title: 'Successfully reserved!',
+                                                    icon: 'success',
+                                                    customClass: {
+                                                        confirmButton: 'hide-button',
+                                                        cancelButton: 'hide-button'
+                                                    },
+                                                })
+                                            });
+                                            console.log("Response from server:", response);
+                                            if (response.success) {
+                                                console.log("UUID:", response.uuid);
+                                                if (response.uuid) {
+                                                    setTimeout(() => {
+                                                        window.location.href = `../appointment.php?uuid=${response.uuid}`;
+                                                    }, 3500);
+                                                } else {
+                                                    console.error("Invalid UUID");
+                                                }
+                                            } else {
+                                                console.error("Failed to create appointment");
+                                            }
+                                        },
+                                        error: function (jqXHR, textStatus, errorThrown) {
+                                            console.error('Error', jqXHR);
+                                            let errorMessage = 'You have reserved this department. Unable to reserve!';
+                                            if (jqXHR.responseText) {
+                                                try {
+                                                    const response = JSON.parse(jqXHR.responseText);
+                                                    if (response.error) {
+                                                        errorMessage = response.error;
+                                                    }
+                                                } catch (e) {
+                                                    console.error('Error parsing response', e);
+                                                }
+                                            }
+                                            Swal.fire({
+                                                title: 'Unsuccessful booking!',
+                                                text: errorMessage,
+                                                icon: 'error',
+                                            }).then(() => {
+                                                setTimeout(function () {
+                                                    location.reload();
+                                                }, 1000);
+                                            });
+                                        }
+                                    });
+                                }
+                            });
                         }
                     });
-                })
+                });
             });
 
-
-
-            document.getElementById('dateClick').addEventListener('click', function () {
-                const datePicker = document.getElementById('calendar');
-
-                if (!datePicker._flatpickr) {
-                    flatpickr(datePicker, {
-                        dateFormat: "dmY",
-                        defaultDate: new Date()
-                    });
-                }
-
-                datePicker._flatpickr.open();
-            });
 
         </script>
 
@@ -418,13 +454,10 @@ try {
                     cancleBtn.addEventListener('click', function () {
                         departmentName = '';
 
-                        // ลบข้อความแสดงผลใน element #departmentDisplay
                         $('#departmentDisplay').text('');
 
-                        // เอา class 'clicked' ออกจากปุ่มทั้งหมด
                         $('.departmentItem').removeClass('clicked');
 
-                        // อาจซ่อนปุ่มหรือทำการกระทำอื่นๆ
                         $('#beforeSelected').show();
                     });
 
@@ -465,7 +498,6 @@ try {
             const leftAfter = document.getElementById('slideLeftAfter');
             const rightAfter = document.getElementById('slideRightAfter');
 
-            // ฟังก์ชันสำหรับเลื่อนไปทางซ้ายและขวาของ beforeCon
             leftBefore.addEventListener('click', function () {
                 beforeCon.scrollBy({
                     left: -200,
@@ -480,7 +512,6 @@ try {
                 });
             });
 
-            // ฟังก์ชันสำหรับเลื่อนไปทางซ้ายและขวาของ afterCon
             leftAfter.addEventListener('click', function () {
                 afterCon.scrollBy({
                     left: -200,
@@ -504,28 +535,25 @@ try {
                             var data = JSON.parse(response);
                             if (data.status === 'logout') {
                                 Swal.fire({
-                                    title: 'Session expired',
+                                    title: 'Session Time Out!',
                                     text: 'You were logged out due to login from another device.',
                                     icon: 'warning',
-                                    confirmButtonText: 'Ok'
+                                    confirmButtonText: 'OK'
                                 }).then(() => {
                                     window.location.href = '../login.php'; // ล็อกเอาท์และไปหน้า login
                                 });
                             }
                         } catch (e) {
-                            console.error("TypeError: Converting circular structure to JSON: " + response);
+                            console.error("Unable to convert JSON data.: " + response);
                         }
                     },
                     error: function (xhr, status, error) {
-                        console.error("SESSION ERROR: " + error);
+                        console.error("Error validating session: " + error);
                     }
                 });
             }
 
-            // เรียกใช้ฟังก์ชัน checkSession ทุกๆ 10 วินาที (10000 milliseconds)
-            setInterval(checkSession, 2500);
-
-
+            setInterval(checkSession, 3000);
         </script>
 
 </body>
