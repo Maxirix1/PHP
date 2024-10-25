@@ -1,6 +1,7 @@
 <?php
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 session_start();
-
 // session_start();
 
 if (!isset($_SESSION['hn'])) {
@@ -291,208 +292,28 @@ try {
         <!-- <script src="script.js"></script> -->
 
         <script src="./popup.js"></script>
-        <!-- <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const Field = document.getElementById('calendar');
-                const dateDisplay = document.getElementById('dateDisplay');
-                const beforeDate = document.getElementById('beforeSelectDate');
-                const today = new Date();
-                const minDate = today;
-                // const minDate = today.toISOString().split('T')[0];
-
-                const datepicker = flatpickr(Field, {
-                    locale: "th",
-                    minDate: minDate,
-                    dateFormat: "dmY",
-                    position: "auto bottom",
-                    allowInput: true,
-                    disableMobile: "true",
-                    onValueUpdate: function (selectedDates, dateStr, instance) {
-                        // ปรับปีให้เป็นปี พ.ศ. ตอนที่มีการอัปเดตค่าใน input
-                        let dateObject = selectedDates[0];
-                        let thaiYear = dateObject.getFullYear() + 543; // แปลงเป็นปีไทย
-                        let formattedDate =
-                            ("0" + dateObject.getDate()).slice(-2) +  // วัน
-                            ("0" + (dateObject.getMonth() + 1)).slice(-2) + // เดือน
-                            thaiYear.toString(); // ปี พ.ศ.
-                        instance.input.value = formattedDate; // ตั้งค่าลงใน input
-                    },
-                    onChange: function (selectedDates, dateStr, instance) {
-                        selectedDate = dateStr;
-                        const thaiDate = convertToThaiDate(selectedDates[0]);
-
-                        $.ajax({
-                            type: "POST",
-                            url: "../../server/timeList.php",
-                            data: {
-                                date: selectedDate
-                            },
-                            success: function (response) {
-                                // console.log(response);
-                                const outputs = response.split('|||');
-                                const before = outputs[0];
-                                const after = outputs[1];
-
-
-                                document.querySelector('#beforeNoon').innerHTML = before;
-                                document.querySelector('#afterNoon').innerHTML = after;
-
-
-                                const buttons = document.querySelectorAll('.Btn');
-                                buttons.forEach(button => {
-                                    button.addEventListener('click', function () {
-                                        // รีเซ็ตสีของทุกปุ่มให้เป็นค่าเดิม
-                                        buttons.forEach(btn => {
-                                            btn.style.backgroundColor = '';
-                                            btn.style.color = '';
-                                        });
-
-                                        // เปลี่ยนสีของปุ่มที่ถูกคลิก
-                                        button.style.backgroundColor = '#00CCA7';
-                                        button.style.color = 'white';
-
-                                        selectedTime = button.textContent;
-                                        department = document.getElementById('departmentDisplay').textContent;
-
-                                        console.log("Selected time: " + selectedTime);
-                                    });
-                                });
-                            },
-                            error: function (error, xhr, status) {
-                                console.error("Error:", error);
-                            }
-                        });
-
-                        dateDisplay.textContent = thaiDate;
-                        beforeDate.style.display = 'none';
-                    },
-                    onOpen: function (selectedDates, dateStr, instance) {
-                        const thaiYear = new Date().getFullYear() + 543;
-                        instance.currentYear = thaiYear;
-                        instance.jumpToDate(new Date());
-                        instance.redraw();
-                    },
-                    onReady: function (selectedDates, dateStr, instance) {
-                        const currentYear = new Date().getFullYear() + 543;
-                        instance.currentYear = currentYear;
-                        instance.redraw();
-                    }
-                });
-
-                function convertToThaiDate(date) {
-                    const monthsThai = [
-                        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-                        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-                    ];
-                    const day = date.getDate();
-                    const month = monthsThai[date.getMonth()];
-                    const year = date.getFullYear() + 543;
-
-                    return `${day} ${month} ${year}`;
-                }
-
-                document.getElementById('submit').addEventListener('click', function () {
-                    thaiDate = dateDisplay.textContent
-
-                    if (!department) {
-                        Swal.fire({
-                            title: 'เลือกข้อมูลให้ครบถ้วน',
-                            text: 'กรุณาเลือกแผนก',
-                            icon: 'warning',
-                            confirmButtonText: 'ตกลง'
-                        });
-                        // return;
-                    }
-
-                    Swal.fire({
-                        title: 'ยืนยันการจอง',
-                        html: ` <div style=" color: #162e71; display: flex; align-items:start; justify-content:start; flex-direction:column;">
-                                <p>วันที่:<h4>${thaiDate}</h4></p>
-                                <br>
-                                <p>แผนก:<h4>${department}</h4></p>
-                                <br>
-                                <p>ช่วงเวลา:<h4>${selectedTime}</h4></p>
-                            </div>`,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'ยืนยัน',
-                        cancelButtonText: 'ยกเลิก',
-                        customClass: {
-                            icon: 'custom-swal-icon' // ใช้ custom class สำหรับไอคอน
-                        }
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: 'POST',
-                                url: '../../server/success/index.php',
-                                data: {
-                                    time: selectedTime,
-                                    date: selectedDate,
-                                    department: departmentDisplay.textContent
-                                },
-                                success: function (response) {
-                                    // console.log(response);
-                                    Swal.fire({
-                                        title: 'การจองเสร็จสิ้น!',
-                                        icon: 'success',
-                                    }).then(() => {
-                                        setTimeout(function () {
-                                            location.reload();
-                                        });
-                                    });
-                                },
-                                error: function (error, xhr, status) {
-                                    console.error('Error', error);
-                                }
-                            })
-                        }
-                    });
-                })
-            });
-
-
-
-            document.getElementById('dateClick').addEventListener('click', function () {
-                const datePicker = document.getElementById('calendar');
-
-                if (!datePicker._flatpickr) {
-                    flatpickr(datePicker, {
-                        dateFormat: "dmY",
-                        defaultDate: new Date()
-                    });
-                }
-
-                datePicker._flatpickr.open();
-            });
-
-        </script> -->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
 
-                // โค้ดการเริ่มต้นอื่น ๆ...
-
                 document.getElementById('submit').addEventListener('click', function () {
 
-                    // แปลง selectedDate เป็นวัตถุ Date
                     const dateObject = new Date(selectedDate);
 
-                    // ฟังก์ชันสำหรับแปลงวันที่เป็นรูปแบบ YYYY-MM-DD
                     function formatDateToSQL(date) {
                         const year = date.getFullYear();
-                        const month = String(date.getMonth() + 1).padStart(2, '0'); // เดือนเริ่มต้นที่ 0
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
                         const day = String(date.getDate()).padStart(2, '0');
                         return `${year}-${month}-${day}`;
                     }
 
-                    formattedDate = formatDateToSQL(dateObject);
+                    const formattedDate = formatDateToSQL(dateObject);
                     console.log(formattedDate);
 
                     const dateDisplayElement = document.getElementById('dateDisplay');
                     const departmentElement = document.getElementById('departmentDisplay');
 
-                    // ตรวจสอบว่ามีองค์ประกอบอยู่หรือไม่
-                    const thaiDate = dateDisplayElement ? dateDisplayElement.textContent : ''; // ใช้ค่าที่แสดงใน input
-                    const department = departmentElement ? departmentElement.textContent : ''; // หาข้อมูลแผนก
+                    const thaiDate = dateDisplayElement ? dateDisplayElement.textContent : '';
+                    const department = departmentElement ? departmentElement.textContent : '';
 
                     if (!department) {
                         Swal.fire({
@@ -501,71 +322,118 @@ try {
                             icon: 'warning',
                             confirmButtonText: 'ตกลง'
                         });
-                        return; // ย้อนกลับถ้าไม่เลือกแผนก
+                        return;
                     }
 
                     console.log(selectedDate);
 
-
                     Swal.fire({
-                        title: 'ยืนยันการจอง',
-                        html: `<div style="color: #162e71; display: flex; align-items:start; justify-content:start; flex-direction:column;">
+                        title: 'เหตุผลที่นัด',
+                        input: 'text',
+                        inputLabel: 'เหตุที่นัด',
+                        inputPlaceholder: 'กรอกเหตุที่นัด',
+                        showCancelButton: true,
+                        confirmButtonText: 'ยืนยัน',
+                        cancelButtonText: 'ยกเลิก',
+                        preConfirm: (value) => {
+                            if (!value) {
+                                Swal.showValidationMessage('กรุณากรอกเหตุที่นัด');
+                            }
+                            return value;
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const reason = result.value;
+
+                            Swal.fire({
+                                title: 'ยืนยันการจอง',
+                                html: `<div style="color: #162e71; display: flex; align-items:start; justify-content:start; flex-direction:column;">
                     <p>วันที่:<h4>${thaiDate}</h4></p>
                     <br>
                     <p>แผนก:<h4>${department}</h4></p>
                     <br>
                     <p>ช่วงเวลา:<h4>${selectedTime}</h4></p>
+                    <br>
+                    <p>เหตุที่นัด:<h4>${reason}</h4></p> <!-- เพิ่มเหตุผลที่นัด -->
                 </div>`,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'ยืนยัน',
-                        cancelButtonText: 'ยกเลิก',
-                        customClass: {
-                            icon: 'custom-swal-icon' // ใช้ custom class สำหรับไอคอน
-                        }
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: 'POST',
-                                url: '../../server/success/index.php',
-                                data: {
-                                    time: selectedTime,
-                                    date: selectedDate,
-                                    department: department // ส่งข้อมูลแผนก
-                                },
-                                success: function (response) {
-                                    Swal.fire({
-                                        title: 'การจองเสร็จสิ้น!',
-                                        icon: 'success',
-                                    }).then(() => {
-                                        setTimeout(function () {
-                                            location.reload();
-                                        }, 1000); // รอ 1 วินาทีก่อนรีเฟรชหน้า
-                                    });
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    console.error('Error', jqXHR);
-                                    let errorMessage = 'คุณมีการจองแผนกนี้แล้ว ไม่สามารถจองได้!'; // ข้อความเริ่มต้น
-
-                                    // ตรวจสอบว่า responseText มีค่าหรือไม่ และแปลงเป็น JSON
-                                    if (jqXHR.responseText) {
-                                        try {
-                                            const response = JSON.parse(jqXHR.responseText);
-                                            if (response.error) {
-                                                errorMessage = response.error; // ดึงข้อความ error จาก PHP
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'ยืนยัน',
+                                cancelButtonText: 'ยกเลิก',
+                                customClass: {
+                                    icon: 'custom-swal-icon'
+                                }
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '../../server/success/index.php',
+                                        data: {
+                                            time: selectedTime,
+                                            date: selectedDate,
+                                            department: department,
+                                            reason: reason
+                                        },
+                                        success: function (response) {
+                                            let timerInterval;
+                                            Swal.fire({
+                                                title: "รอสักครู่...",
+                                                timer: 2000,
+                                                timerProgressBar: true,
+                                                customClass: {
+                                                    confirmButton: 'hide-button',
+                                                    cancelButton: 'hide-button'
+                                                },
+                                                willClose: () => {
+                                                    clearInterval(timerInterval);
+                                                }
+                                            }).then((result) => {
+                                                Swal.fire({
+                                                    title: 'จองสำเร็จ!',
+                                                    icon: 'success',
+                                                    customClass: {
+                                                        confirmButton: 'hide-button',
+                                                        cancelButton: 'hide-button'
+                                                    },
+                                                })
+                                            });
+                                            console.log("Response from server:", response);
+                                            if (response.success) {
+                                                console.log("UUID:", response.uuid);
+                                                if (response.uuid) {
+                                                    setTimeout(() => {
+                                                        window.location.href = `../appointment.php?uuid=${response.uuid}`;
+                                                    }, 3500);
+                                                } else {
+                                                    console.error("UUID ไม่ถูกต้อง");
+                                                }
+                                            } else {
+                                                console.error("ไม่สำเร็จในการสร้างการนัดหมาย");
                                             }
-                                        } catch (e) {
-                                            console.error('Error parsing response', e);
+                                        },
+                                        error: function (jqXHR, textStatus, errorThrown) {
+                                            console.error('Error', jqXHR);
+                                            let errorMessage = 'คุณจองแผนกนี้แล้ว ไม่สามารถจองได้!';
+                                            if (jqXHR.responseText) {
+                                                try {
+                                                    const response = JSON.parse(jqXHR.responseText);
+                                                    if (response.error) {
+                                                        errorMessage = response.error;
+                                                    }
+                                                } catch (e) {
+                                                    console.error('Error parsing response', e);
+                                                }
+                                            }
+                                            Swal.fire({
+                                                title: 'จองไม่สำเร็จ!',
+                                                text: errorMessage,
+                                                icon: 'error',
+                                            }).then(() => {
+                                                setTimeout(function () {
+                                                    location.reload();
+                                                }, 1000);
+                                            });
                                         }
-                                    }
-                                    Swal.fire({
-                                        title: 'จองไม่สำเร็จ!',
-                                        text: errorMessage,
-                                        icon: 'error',
-                                    }).then(() => {
-                                        setTimeout(function () {
-                                            location.reload();
-                                        }, 1000); // รอ 1 วินาทีก่อนรีเฟรชหน้า
                                     });
                                 }
                             });
@@ -573,6 +441,7 @@ try {
                     });
                 });
             });
+
 
         </script>
 
@@ -689,15 +558,7 @@ try {
                 });
             }
 
-            // เรียกใช้ฟังก์ชัน checkSession ทุกๆ 10 วินาที (10000 milliseconds)
-            setInterval(checkSession, 2500);
-
-
-
-
-
-
-
+            setInterval(checkSession, 3000);
         </script>
 
 </body>

@@ -61,7 +61,7 @@ try {
         </style>
         <body>
             <div class="container mt-4">
-                <h2>ข้อมูลการจอง HN: ' . htmlspecialchars($hn) . '</h2>
+                <h2 class="text-center">ข้อมูลการจอง <br>เลขบัตร: ' . htmlspecialchars($hn) . '</h2>
                 <button class="btn btn-primary mb-4" onclick="goBack()">หน้าแรก</button>
 
                 <script>
@@ -77,6 +77,7 @@ try {
                                 <th>เวลา</th>
                                 <th>แผนก</th>
                                 <th>ยกเลิก</th>
+                                <th>ใบนัด</th>
                             </tr>
                         </thead>
                         <tbody>';
@@ -87,13 +88,22 @@ try {
             echo '<td>' . htmlspecialchars($row['date']) . '</td>';
             echo '<td>' . htmlspecialchars($row['reserve_time']) . '</td>';
             echo '<td>' . htmlspecialchars($row['dept']) . '</td>';
-            echo '<td>
+            echo '<td class="text-center">
                     <button type="button" class="btn btn-danger" onclick="confirmCancel(\'' . htmlspecialchars($row['hn']) . '\', \'' . htmlspecialchars($row['date']) . '\', \'' . htmlspecialchars($row['reserve_time']) . '\', \'' . htmlspecialchars($row['dept']) . '\')">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
 </svg>
 
                     </button>
+                    
+                  </td>';
+            echo '<td class="text-center">
+                  <a href="../appointment.php?uuid='.$row['appointment_id'] .'" type="button" class="btn btn-light">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m4 8h6m-6-4h6m4-8v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"/>
+</svg>
+
+                    </a>
                   </td>';
             echo '</tr>';
         }
@@ -149,7 +159,7 @@ try {
         </style>
         <body>
             <div class="container mt-4">
-                <h2>ข้อมูลการจอง HN: ' . htmlspecialchars($hn) . '</h2>
+                <h2>ข้อมูลการจอง HN: ไม่พบข้อมูล</h2>
                 <button class="btn btn-primary mb-4" onclick="goBack()">หน้าแรก</button>
 
                 <script>
@@ -181,6 +191,9 @@ try {
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
 </svg>
 
+                    </button>
+                    <button type="button" class="btn btn-light">
+                    <i class="bi bi-newspaper"></i>
                     </button>
                   </td>';
             echo '</tr>';

@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
 if (!$_SESSION['hn']) {
@@ -15,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hn = $_SESSION['hn'];
         $department = $_POST['department'];
         $time = $_POST['time'];
+        $reason = $_POST['reason'];
 
         // แสดงค่าเวลาเพื่อตรวจสอบ
         // echo "ค่าเวลา: $date<br>";
@@ -146,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (count($timeSlots) > $nextSlotTime) {
             $nextSlot = $timeSlots[$nextSlotTime];
-            echo "เวลาย่อยอันถัดไปคือ: " . $nextSlot;
+            // echo "เวลาย่อยอันถัดไปคือ: " . $nextSlot;
         } else {
             echo "ไม่มีเวลาย่อยอันถัดไป";
         }
@@ -171,8 +175,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit; // หยุดการทำงานหากมีการจองซ้ำ
         }
 
+        function generateUUID() {
+            return sprintf(
+                '%s-%s-%s-%s-%s',
+                bin2hex(random_bytes(4)),
+                bin2hex(random_bytes(2)),
+                bin2hex(random_bytes(2)),
+                bin2hex(random_bytes(2)),
+                bin2hex(random_bytes(6))
+            );
+        };
 
-        $sql = "INSERT INTO reserve_time (date, hn, dept, reserve_time, queue_no) VALUES (:selectedDate, :hn, :department, :selectedTime, :queue_no)"; // แก้ไขชื่อ table และ column ให้ตรงกับฐานข้อมูลของคุณ
+        $appointment_id = generateUUID();
+
+        $sql = "INSERT INTO reserve_time (date, hn, dept, reserve_time, queue_no, appointment_id, reason) VALUES (:selectedDate, :hn, :department, :selectedTime, :queue_no, :appointment_id, :reason)";
 
         try {
             $stmt = $conn->prepare($sql);
@@ -181,14 +197,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindParam(':department', $department);
             $stmt->bindParam(':selectedTime', $nextSlot);
             $stmt->bindParam(':queue_no', $newQueueNumber);
+            $stmt->bindParam(':appointment_id', $appointment_id);
+            $stmt->bindParam(':reason', $reason);
             $stmt->execute();
+
+            header('Content-Type: application/json');
+            // header("Location: ../../client/appointment.php?uuid=$appointment_id");
+            echo json_encode(['success' => true, 'uuid' => $appointment_id]);
+            exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
             exit; // หยุดการทำงานหากเกิดข้อผิดพลาด
         }
 
-
-        echo "บันทึกเวลาสำเร็จ";
     } else {
         echo "ไม่มีวันที่ที่เลือก";
     }

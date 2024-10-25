@@ -36,7 +36,19 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         exit();
     }
 
-    $stmt = $conn->prepare("INSERT INTO users_signup (userName, userHn, birthDate, phoneNumber, address, fatherName, motherName, urgentName, urgentNumber, password) VALUES (:userName, :userHn, :birthDate, :phoneNumber, :address, :fatherName, :motherName, :urgentName, :urgentNumber, :password)");
+    function generateUUIDprofile(){
+        return sprintf(
+            '%s-%s-%s-%s',
+            bin2hex(random_bytes(4)),
+            bin2hex(random_bytes(2)),
+            bin2hex(random_bytes(2)),
+            bin2hex(random_bytes(6))
+        );
+    };
+
+    $linkProfile = generateUUIDprofile();
+
+    $stmt = $conn->prepare("INSERT INTO users_signup (userName, userHn, birthDate, phoneNumber, address, fatherName, motherName, urgentName, urgentNumber, password, profile) VALUES (:userName, :userHn, :birthDate, :phoneNumber, :address, :fatherName, :motherName, :urgentName, :urgentNumber, :password, :profile)");
     $result = $stmt->execute([
         "userName" => $username,
         "userHn" => $userHn,
@@ -47,7 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         "motherName" => $motherName,
         "urgentName" => $urgentName,
         "urgentNumber" => $urgentNumber,
-        "password" => $password
+        "password" => $password,
+        "profile" => $linkProfile
     ]);
 
     if ($result) {
