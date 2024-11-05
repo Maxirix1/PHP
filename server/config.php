@@ -2,10 +2,10 @@
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
-$serverName = "49.0.65.19";
-$database = "smart_queue";
-$username = "test";
-$password = "admin1234";
+$serverName = 
+$database = 
+$username = 
+$password = 
 
 try {
     $conn = new PDO("sqlsrv:server=$serverName,1433;Database=$database", $username, $password);
