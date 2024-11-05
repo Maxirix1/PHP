@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['hn'])) {
+    header('Location: ../client/HomeTH');
+    exit();
+}
+
 require_once "./config.php";
 
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {

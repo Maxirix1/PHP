@@ -1,6 +1,11 @@
 <?php
 
 include './config.php';
+
+if (!isset($_SESSION['hn'])) {
+    header('Location: ../client/HomeTH');
+    exit();
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['date'] = $_POST['date'];
 }
@@ -58,14 +63,12 @@ try {
     $beforeNoon = [];
     $afterNoon = [];
 
-    // แยกช่วงเวลา beforeNoon และ afterNoon
+    // แยกช่วงเวลา
     foreach ($rangeTimes as $rangeRow) {
         $rangeTime = $rangeRow['range_time'];
 
-        // แยกเวลาเริ่มต้นและสิ้นสุด
         list($startTime, $endTime) = explode('-', $rangeTime);
 
-        // กำหนดการแบ่งช่วงเวลา based on time
         if (strtotime($startTime) < strtotime("12:00")) {
             $beforeNoon[] = $rangeRow;
         } else {
@@ -100,7 +103,6 @@ try {
     echo $outputBefore . '|||' . $outputAfter;
     // exit();
 } catch (PDOException $e) {
-    // แสดงerror
     echo "Error: " . $e->getMessage();
 }
 ?>

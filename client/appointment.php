@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 session_start();
 require_once '../server/config.php';
-include './phpqrcode/qrlib.php'; // เรียกใช้ phpqrcode
+include './phpqrcode/qrlib.php';
 
 if (isset($_GET['uuid'])) {
     $uuid = $_GET['uuid'];
@@ -28,9 +28,7 @@ if (isset($_GET['uuid'])) {
             $name = $hn['userName'];
             $profile = $hn['profile'];
 
-            // สร้างลิงก์ที่ต้องการใช้ใน QR code
             $link = "http://maxirix.thddns.net:7374/PHP/client/profile.php?name=$profile";
-            // กำหนดที่อยู่ไฟล์ PNG ที่จะเก็บ QR code
             $tempDir = 'tempDir/';
             if (!is_dir($tempDir)) {
                 mkdir($tempDir);
@@ -42,7 +40,6 @@ if (isset($_GET['uuid'])) {
                 $fileName = $tempDir . $profile . '.png';
                 $link = "http://maxirix.thddns.net:7374/PHP/client/profile.php?name=$profile";
 
-                // สร้าง QR Code และบันทึกในไฟล์
                 QRcode::png($link, $fileName, QR_ECLEVEL_L, 2);
             }
 

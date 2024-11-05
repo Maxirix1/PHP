@@ -1,5 +1,4 @@
 function confirmCancel(hn, date, reserve_time, dept) {
-    // แสดงกล่องยืนยันด้วย SweetAlert
     Swal.fire({
         title: 'ยืนยันการยกเลิก',
         text: "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจองนี้?",
@@ -11,7 +10,6 @@ function confirmCancel(hn, date, reserve_time, dept) {
         cancelButtonText: 'ยกเลิก'
     }).then((result) => {
         if (result.isConfirmed) {
-            // ส่งคำขอ AJAX เมื่อผู้ใช้ยืนยันการยกเลิก
 
             $.ajax({
                 type: "POST",
@@ -24,7 +22,7 @@ function confirmCancel(hn, date, reserve_time, dept) {
                     dept: dept
                 },
                 success: function(response) {
-                    console.log(response); // ตรวจสอบข้อมูลที่ได้รับ
+                    console.log(response);
                     try {
                         response = JSON.parse(response);
                         if (response.status === 'success') {

@@ -109,12 +109,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nextTime = clone $currentTime;
                 $nextTime->modify("+{$subIntervalMinutes} minutes");
 
-                // ถ้าเป็นช่วงสุดท้าย ใช้เวลาสิ้นสุดเดิม
                 if ($i == $qty_taking - 1) {
                     $nextTime = $endTime;
                 }
 
-                // เก็บช่วงเวลา
                 $timeSlots[] = $nextTime->format('H:i');
 
                 $currentTime = $nextTime;
