@@ -12,7 +12,6 @@ require_once '../config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // ตรวจสอบว่ามีค่า selectedDate ใน SESSION หรือไม่
     if (isset($_POST['date'])) {
         $date = $_POST['date'];
         $hn = $_SESSION['hn'];
@@ -20,10 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $time = $_POST['time'];
         $reason = $_POST['reason'];
 
-        // แสดงค่าเวลาเพื่อตรวจสอบ
         // echo "ค่าเวลา: $date<br>";
 
-        // ตรวจสอบรูปแบบเวลาที่ส่งมา
         if (preg_match('/^\s*\d{2}:\d{2}\s*-\s*\d{2}:\d{2}\s*$/', $time) === 0) {
             // echo "รูปแบบเวลาที่ส่งมาไม่ถูกต้อง";
             exit;
@@ -57,45 +54,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_qty = $conn->prepare($sql_qty);
         $stmt_qty->bindParam(':range_time', $time);
         $stmt_qty->execute();
-        $qty_taking = $stmt_qty->fetch(PDO::FETCH_ASSOC)['qty_taking']; // ดึงค่า qty_taking ออกมา
+        $qty_taking = $stmt_qty->fetch(PDO::FETCH_ASSOC)['qty_taking'];
 
-        // แสดงจำนวนที่สามารถจองได้
         // if ($qty_taking) {
         //     echo "จำนวนที่สามารถจองได้: $qty_taking<br>";
         // } else {
         //     echo "ไม่พบจำนวนที่สามารถจองได้สำหรับช่วงเวลา: $time";
         //     exit;
         // }
-        // ดึงเวลาย่อยทั้งหมดจากฐานข้อมูล
         $sql_dateReserve = 'SELECT * FROM reserve_time WHERE date = :date';
         $stmt_dateReserve = $conn->prepare($sql_dateReserve);
         $stmt_dateReserve->bindParam(':date', $date, PDO::PARAM_STR);
         $stmt_dateReserve->execute();
         $reserve_times = $stmt_dateReserve->fetchAll(PDO::FETCH_ASSOC);
 
-        // แยกค่าเวลาที่ต้องการตรวจสอบ
         list($startTime, $endTime) = explode('-', $time);
         $givenStart = DateTime::createFromFormat('H:i', trim($startTime));
         $givenEnd = DateTime::createFromFormat('H:i', trim($endTime));
 
-        // ตัวแปรนับจำนวนเวลาที่อยู่ในช่วงที่กำหนด
         $countValidSlots = 0;
 
-        // ตรวจสอบเวลาที่ถูกจองทั้งหมด
         foreach ($reserve_times as $reserve) {
-            // แปลงเวลาที่เก็บในฐานข้อมูลเป็น DateTime
             $reservedTime = DateTime::createFromFormat('H:i', trim($reserve['reserve_time']));
 
-            // Debug: แสดงค่าที่เปรียบเทียบ
             // echo "Reserved Time: " . $reservedTime->format('H:i') . " | Start: " . $givenStart->format('H:i') . " | End: " . $givenEnd->format('H:i') . "<br>";
 
-            // ตรวจสอบว่ามีการชนกันระหว่างเวลาที่เก็บในฐานข้อมูลและเวลาที่กำหนด
             if ($reservedTime >= $givenStart && $reservedTime < $givenEnd) {
                 $countValidSlots++;
             }
         }
 
-        // แสดงจำนวนเวลาที่อยู่ในช่วงที่ต้องการ
         // echo "จำนวนเวลาย่อยในช่วง '$time' ที่มีในฐานข้อมูล: $countValidSlots";
         function splitTimeRange($time, $qty_taking)
         {
@@ -107,13 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $interval = $startTime->diff($endTime);
             $totalMinutes = $interval->h * 60 + $interval->i;
 
-            // ตรวจสอบว่า qty_taking เป็นค่าบวกและไม่เท่ากับ 0
             if ($qty_taking <= 0) {
                 echo "จำนวนที่สามารถจองได้ต้องมากกว่าศูนย์";
                 return [];
             }
 
-            // คำนวณเวลาย่อยต่อชิ้น
             $subIntervalMinutes = intval($totalMinutes / $qty_taking);
 
             $timeSlots = [];
@@ -128,16 +114,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nextTime = $endTime;
                 }
 
-                // เก็บช่วงเวลาในรูปแบบ H:i-H:i
+                // เก็บช่วงเวลา
                 $timeSlots[] = $nextTime->format('H:i');
 
-                // อัปเดตเวลาปัจจุบันเพื่อทำงานต่อในรอบถัดไป
                 $currentTime = $nextTime;
             }
             return $timeSlots;
         }
 
-        // เรียกใช้ฟังก์ชันเพื่อแบ่งช่วงเวลา
         $timeSlots = splitTimeRange($time, $qty_taking);
 
         if (empty($timeSlots)) {
@@ -155,7 +139,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "ไม่มีเวลาย่อยอันถัดไป";
         }
 
-        // // แสดงผลช่วงเวลาที่แบ่งได้
         // echo "ช่วงเวลาที่แบ่งได้: <br>";
         // foreach ($timeSlots as $slot) {
         //     echo $slot . "<br>"; // แสดงช่วงเวลาแต่ละช่วง
@@ -171,8 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($reserveCount > 0) {
             echo json_encode(['error' => 'คุณได้ทำการจองในแผนกนี้แล้วในวันนี้']);
-            http_response_code(400); // กำหนดรหัสสถานะ HTTP เป็น 400 เพื่อบอกว่าเกิดข้อผิดพลาด
-            exit; // หยุดการทำงานหากมีการจองซ้ำ
+            http_response_code(400);
+            exit;
         }
 
         function generateUUID() {
@@ -207,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
-            exit; // หยุดการทำงานหากเกิดข้อผิดพลาด
+            exit;
         }
 
     } else {
