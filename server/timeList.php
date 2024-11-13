@@ -15,7 +15,6 @@ $date = $_SESSION['date'];
 
 
 try {
-    // reserve_time
     $sqlReserve = "SELECT reserve_time FROM reserve_time WHERE date = :date";
     $stmtReserve = $conn->prepare($sqlReserve);
 
@@ -23,7 +22,6 @@ try {
     $stmtReserve->execute();
     $reserveTimes = $stmtReserve->fetchAll(PDO::FETCH_ASSOC);
 
-    // setting_reserve
     $sqlSetting = "SELECT range_time, qty_reserve FROM setting_reserve";
     $stmtSetting = $conn->query($sqlSetting);
     $rangeTimes = $stmtSetting->fetchAll(PDO::FETCH_ASSOC);
@@ -63,7 +61,6 @@ try {
     $beforeNoon = [];
     $afterNoon = [];
 
-    // แยกช่วงเวลา
     foreach ($rangeTimes as $rangeRow) {
         $rangeTime = $rangeRow['range_time'];
 

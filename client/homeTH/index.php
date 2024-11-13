@@ -87,9 +87,9 @@ try {
                     const selectedValue = dropdown.value;
 
                     if (selectedValue === 'en') {
-                        window.location.href = '../HomeEN'; // เปลี่ยนเป็น URL ของหน้า homeEN ที่ต้องการ
+                        window.location.href = '../HomeEN';
                     } else if (selectedValue === 'th') {
-                        window.location.href = '../HomeTH'; // เปลี่ยนเป็น URL ของหน้าไทยที่ต้องการ
+                        window.location.href = '../HomeTH';
                     }
                 }
             </script>
