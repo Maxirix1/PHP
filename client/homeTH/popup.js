@@ -67,14 +67,12 @@ let currentDate = new Date();
 let selectedDate = new Date();
 let displayDate = new Date();
 
-// Initialize the datepicker
 function initializeDatepicker() {
   currentDate.setHours(0, 0, 0, 0);
   displayDate = new Date(currentDate);
   renderCalendar();
 }
 
-// Update the calendar display
 function renderCalendar() {
   monthYear.textContent = `${thaiMonths[displayDate.getMonth()]} ${
     displayDate.getFullYear() + 543
@@ -82,7 +80,6 @@ function renderCalendar() {
   const year = displayDate.getFullYear();
   const month = displayDate.getMonth();
 
-  // Clear the previous days
   days.innerHTML = "";
 
   const firstDay = new Date(year, month, 1);
@@ -90,29 +87,25 @@ function renderCalendar() {
   const startDay = firstDay.getDay();
   const totalDays = lastDay.getDate();
 
-  // Create blank cells for the days before the first day
   let html = "<tr>";
   for (let i = 0; i < startDay; i++) {
     html += "<td></td>";
   }
-
-  // Create cells for each day of the month
   for (let day = 1; day <= totalDays; day++) {
     const dayDate = new Date(year, month, day);
-    const isDisabled = dayDate < currentDate; // Disable past dates
+    const isDisabled = dayDate < currentDate;
     html += `<td class="${
       isDisabled ? "disabled" : ""
     }" data-date="${dayDate}">${day}</td>`;
 
     if ((day + startDay) % 7 === 0) {
-      html += "</tr><tr>"; // Start a new row every week
+      html += "</tr><tr>";
     }
   }
   html += "</tr>";
   days.innerHTML = html;
 }
 
-// Show/Hide calendar
 document.getElementById("dateClick").addEventListener("click", () => {
   if (calendar.style.display === "block") {
     calendar.style.display = "none";
@@ -122,7 +115,6 @@ document.getElementById("dateClick").addEventListener("click", () => {
   }
 });
 
-// Select a date
 days.addEventListener("click", (e) => {
   if (e.target.dataset.date) {
     const selectDate = new Date(e.target.dataset.date);
@@ -156,13 +148,11 @@ days.addEventListener("click", (e) => {
         const buttons = document.querySelectorAll(".Btn");
         buttons.forEach((button) => {
           button.addEventListener("click", function () {
-            // รีเซ็ตสีของทุกปุ่มให้เป็นค่าเดิม
             buttons.forEach((btn) => {
               btn.style.backgroundColor = "";
               btn.style.color = "";
             });
 
-            // เปลี่ยนสีของปุ่มที่ถูกคลิก
             button.style.backgroundColor = "#00CCA7";
             button.style.color = "white";
 
@@ -183,7 +173,6 @@ days.addEventListener("click", (e) => {
   }
 });
 
-// Change month
 document.getElementById("prevMonth").addEventListener("click", () => {
   displayDate.setMonth(displayDate.getMonth() - 1);
   renderCalendar();
@@ -193,23 +182,21 @@ document.getElementById("nextMonth").addEventListener("click", () => {
   displayDate.setMonth(displayDate.getMonth() + 1);
   renderCalendar();
 });
-// Close calendar when clicking outside
 document.addEventListener('click', (event) => {
     const isClickInside = dateClick.contains(event.target) || calendar.contains(event.target);
     
     if (!isClickInside) {
-        calendar.style.display = 'none'; // ปิดปฏิทินเมื่อคลิกนอก
+        calendar.style.display = 'none';
     }
 });
 
 document.addEventListener('click', (event) => {
     const isClickInside = dateClick.contains(event.target) || calendar.contains(event.target);
     if (!isClickInside) {
-        calendar.style.display = 'none'; // ปิดปฏิทินเมื่อคลิกนอก
+        calendar.style.display = 'none';
     }
 });
 
-// Event listener for the submit button
 
 
 initializeDatepicker();

@@ -86,9 +86,9 @@ try {
                     const selectedValue = dropdown.value;
 
                     if (selectedValue === 'en') {
-                        window.location.href = '../HomeEN'; // เปลี่ยนเป็น URL ของหน้า homeEN ที่ต้องการ
+                        window.location.href = '../HomeEN';
                     } else if (selectedValue === 'th') {
-                        window.location.href = '../HomeTH'; // เปลี่ยนเป็น URL ของหน้าไทยที่ต้องการ
+                        window.location.href = '../HomeTH';
                     }
                 }
             </script>
@@ -469,17 +469,13 @@ try {
         <script>
             document.addEventListener('DOMContentLoaded', function () {
 
-                // โค้ดการเริ่มต้นอื่น ๆ...
-
                 document.getElementById('submit').addEventListener('click', function () {
 
-                    // แปลง selectedDate เป็นวัตถุ Date
                     const dateObject = new Date(selectedDate);
 
-                    // ฟังก์ชันสำหรับแปลงวันที่เป็นรูปแบบ YYYY-MM-DD
                     function formatDateToSQL(date) {
                         const year = date.getFullYear();
-                        const month = String(date.getMonth() + 1).padStart(2, '0'); // เดือนเริ่มต้นที่ 0
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
                         const day = String(date.getDate()).padStart(2, '0');
                         return `${year}-${month}-${day}`;
                     }
@@ -491,8 +487,8 @@ try {
                     const departmentElement = document.getElementById('departmentDisplay');
 
                     // ตรวจสอบว่ามีองค์ประกอบอยู่หรือไม่
-                    const thaiDate = dateDisplayElement ? dateDisplayElement.textContent : ''; // ใช้ค่าที่แสดงใน input
-                    const department = departmentElement ? departmentElement.textContent : ''; // หาข้อมูลแผนก
+                    const thaiDate = dateDisplayElement ? dateDisplayElement.textContent : '';
+                    const department = departmentElement ? departmentElement.textContent : '';
 
                     if (!department) {
                         Swal.fire({
@@ -501,7 +497,7 @@ try {
                             icon: 'warning',
                             confirmButtonText: 'ตกลง'
                         });
-                        return; // ย้อนกลับถ้าไม่เลือกแผนก
+                        return;
                     }
 
                     console.log(selectedDate);
@@ -521,7 +517,7 @@ try {
                         confirmButtonText: 'ยืนยัน',
                         cancelButtonText: 'ยกเลิก',
                         customClass: {
-                            icon: 'custom-swal-icon' // ใช้ custom class สำหรับไอคอน
+                            icon: 'custom-swal-icon' 
                         }
                     }).then((result) => {
                         if (result.isConfirmed) {
@@ -531,7 +527,7 @@ try {
                                 data: {
                                     time: selectedTime,
                                     date: selectedDate,
-                                    department: department // ส่งข้อมูลแผนก
+                                    department: department 
                                 },
                                 success: function (response) {
                                     Swal.fire({
@@ -545,14 +541,13 @@ try {
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     console.error('Error', jqXHR);
-                                    let errorMessage = 'คุณมีการจองแผนกนี้แล้ว ไม่สามารถจองได้!'; // ข้อความเริ่มต้น
+                                    let errorMessage = 'คุณมีการจองแผนกนี้แล้ว ไม่สามารถจองได้!';
 
-                                    // ตรวจสอบว่า responseText มีค่าหรือไม่ และแปลงเป็น JSON
                                     if (jqXHR.responseText) {
                                         try {
                                             const response = JSON.parse(jqXHR.responseText);
                                             if (response.error) {
-                                                errorMessage = response.error; // ดึงข้อความ error จาก PHP
+                                                errorMessage = response.error;
                                             }
                                         } catch (e) {
                                             console.error('Error parsing response', e);
@@ -565,7 +560,7 @@ try {
                                     }).then(() => {
                                         setTimeout(function () {
                                             location.reload();
-                                        }, 1000); // รอ 1 วินาทีก่อนรีเฟรชหน้า
+                                        }, 1000); // รอ 1 วิ
                                     });
                                 }
                             });

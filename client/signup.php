@@ -273,7 +273,6 @@ error_reporting(E_ALL);
                                 monthSelect.appendChild(option);
                             });
 
-                            // เติมข้อมูลใน yearSelect (ตั้งค่าให้เลือกปีปัจจุบันย้อนหลังหรืออนาคต 10 ปี)
                             const currentYear = currentDate.getFullYear();
                             for (let i = currentYear - 80; i <= currentYear + 0; i++) {
                                 const option = document.createElement('option');
@@ -282,12 +281,10 @@ error_reporting(E_ALL);
                                 yearSelect.appendChild(option);
                             }
 
-                            // ตั้งค่าเริ่มต้นของ monthSelect และ yearSelect
                             monthSelect.value = displayDate.getMonth();
                             yearSelect.value = displayDate.getFullYear();
                         }
 
-                        // อัปเดตการแสดงปฏิทิน
                         function renderCalendar() {
                             const year = displayDate.getFullYear();
                             const month = displayDate.getMonth();
@@ -321,13 +318,11 @@ error_reporting(E_ALL);
                             yearSelect.value = displayDate.getFullYear();
                         }
 
-                        // แสดงปฏิทินเมื่อคลิก input
                         dateInput.addEventListener('focus', () => {
                             calendar.style.display = 'block';
                             renderCalendar();
                         });
 
-                        // เลือกวันที่
                         days.addEventListener('click', (e) => {
                             if (e.target.dataset.date) {
                                 const selectedDate = new Date(e.target.dataset.date);
@@ -342,7 +337,6 @@ error_reporting(E_ALL);
                             const currentYear = currentDate.getFullYear();
 
                             if (displayDate.getFullYear() === currentYear && displayDate.getMonth() === currentMonth) {
-                                // ถ้าเป็นเดือนและปีปัจจุบัน ไม่ให้เลื่อน
                                 return;
                             }
 
@@ -350,25 +344,21 @@ error_reporting(E_ALL);
                             renderCalendar();
                         });
 
-                        // เลื่อนเดือนก่อนหน้า
                         prevMonthBtn.addEventListener('click', () => {
                             displayDate.setMonth(displayDate.getMonth() - 1);
                             renderCalendar();
                         });
 
-                        // อัปเดตเมื่อผู้ใช้เปลี่ยนเดือน
                         monthSelect.addEventListener('change', (e) => {
                             displayDate.setMonth(e.target.value);
                             renderCalendar();
                         });
 
-                        // อัปเดตเมื่อผู้ใช้เปลี่ยนปี
                         yearSelect.addEventListener('change', (e) => {
                             displayDate.setFullYear(e.target.value);
                             renderCalendar();
                         });
 
-                        // ฟังก์ชันเริ่มต้น
                         populateMonthYearSelectors();
                         renderCalendar();
 
@@ -376,14 +366,11 @@ error_reporting(E_ALL);
                     <script>
                         function togglePasswordVisibility() {
                             var passwordField = document.getElementById("password");
-                            // var eyeHide = document.getElementById("eye-hide");
 
                             if (passwordField.type === "password") {
                                 passwordField.type = "text";
-                                // eyeHide.classList.add("hidden");
                             } else {
                                 passwordField.type = "password";
-                                // eyeHide.classList.remove("hidden");
                             }
                         }
                     </script>

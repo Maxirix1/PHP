@@ -24,7 +24,7 @@ $(document).ready(function () {
 
   function updateMonthDisplay() {
     const month = monthsTH[currentDate.getMonth()];
-    const year = currentDate.getFullYear() + 543; // ปีพุทธศักราช
+    const year = currentDate.getFullYear() + 543;
     $monthDisplay.text(`${month} ${year}`);
   }
 
@@ -70,16 +70,14 @@ $(document).ready(function () {
         `<div class="dateWeek">${dayOfWeek}</div><br/><div class="dateNumber">${date}</div>`
       );
 
-      // เมื่อคลิกวันที่
       $box.on("click", () => {
         const formattedDate = formatDateToDDMMYYYY(dateForButton);
         console.log("Selected Date: " + formattedDate);
 
-        // ตั้งค่า selectedDate ใน data attribute
         $container.data("selectedDate", formattedDate);
 
         const selectedDepartment = $("#department").val();
-        sendDateAndDepartment(formattedDate, selectedDepartment); // ส่งวันที่และแผนก
+        sendDateAndDepartment(formattedDate, selectedDepartment);
 
       });
 
@@ -109,7 +107,6 @@ $(document).ready(function () {
   updateDates();
 });
 
-// ฟังก์ชันส่งข้อมูล
 function sendTime(slot, button) {
     const selectedDate = $("#dateContainer").data("selectedDate");
     const selectedDepartment = $("#department").val();
@@ -131,7 +128,7 @@ function sendTime(slot, button) {
         url: "./index.php",
         method: "POST",
         data: {
-            selectedTime: slot, // ใช้ slot เป็นเวลา
+            selectedTime: slot,
             selectedDate: selectedDate,
             department: selectedDepartment,
         },
@@ -149,7 +146,6 @@ function sendTime(slot, button) {
 
 function handleButtonClick(slot, isReserved) {
   if (isReserved) {
-      // Show SweetAlert when button for reserved time is clicked
       Swal.fire({
           icon: 'warning',
           title: 'ไม่สามารถเลือกเวลา',
@@ -158,7 +154,7 @@ function handleButtonClick(slot, isReserved) {
       });
   } else {
       sendTime(slot);
-      changeButtonColor(button); // You may need to pass the button element if you want to change color
+      changeButtonColor(button);
   }
 }
 

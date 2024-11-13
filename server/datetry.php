@@ -16,9 +16,9 @@
         }
         
         .calendar {
-            display: none; /* เริ่มต้นให้ปิดปฏิทิน */
+            display: none;
             position: absolute;
-            width: 600px; /* กำหนดขนาดของปฏิทิน */
+            width: 600px; 
             height: auto;
             background: white;
             border-radius: 10px;
@@ -96,12 +96,10 @@
     let currentDate = new Date();
     let displayDate = new Date(currentDate);
 
-    // Initialize the datepicker
     function initializeDatepicker() {
         renderCalendar();
     }
 
-    // Update the calendar display
     function renderCalendar() {
         monthYear.textContent = `${thaiMonths[displayDate.getMonth()]} ${displayDate.getFullYear() + 543}`;
         const year = displayDate.getFullYear();
@@ -121,7 +119,7 @@
 
         for (let day = 1; day <= totalDays; day++) {
             const dayDate = new Date(year, month, day);
-            const isDisabled = dayDate < currentDate; // Disable past dates
+            const isDisabled = dayDate < currentDate;
             html += `<td class="${isDisabled ? 'disabled' : ''}" data-date="${dayDate}">${day}</td>`;
 
             if ((day + startDay) % 7 === 0) {
@@ -132,13 +130,11 @@
         days.innerHTML = html;
     }
 
-    // Show/Hide calendar
     dateInput.addEventListener('focus', () => {
         calendar.style.display = 'block';
         renderCalendar();
     });
 
-    // Select a date
     days.addEventListener('click', (e) => {
         if (e.target.dataset.date) {
             const selectedDate = new Date(e.target.dataset.date);
@@ -147,15 +143,14 @@
         }
     });
 
-    // Close calendar when clicking outside
     document.addEventListener('click', (event) => {
         const isClickInside = dateInput.contains(event.target) || calendar.contains(event.target);
         if (!isClickInside) {
-            calendar.style.display = 'none'; // ปิดปฏิทินเมื่อคลิกนอก
+            calendar.style.display = 'none';
         }
     });
 
-    initializeDatepicker(); // Initialize the datepicker
+    initializeDatepicker();
 </script>
 
 </body>
